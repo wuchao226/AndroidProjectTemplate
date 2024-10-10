@@ -34,7 +34,7 @@ navigationVersion = "2.5.3"
 dataStoreVersion = "1.1.1"
 workVersion = "2.8.1"
 mmkvVersion = "1.3.9"
-startupVersion = "1.1.1"
+startupVersion = "1.2.0"
 
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -43,6 +43,7 @@ espressoCore = "3.5.1"
 #第三方
 theRouterVersion = "1.2.2"
 retrofitVersion = "2.11.0"
+okhttpVersion = "4.12.0"
 glideVersion = "4.16.0"
 imageSelectorVersion = "v3.11.2"
 xPopupVersion = "2.10.0"
@@ -135,6 +136,10 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 #Gson 解析容错框架 https://github.com/getActivity/GsonFactory
 gsonFactory = { module = "com.github.getActivity:GsonFactory", version.ref = "gsonFactoryVersion" }
 
+#okhttp
+okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
+okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpVersion" }
+
 #Glide https://github.com/bumptech/glide
 glide-core = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
 glide-annotation = { module = "com.github.bumptech.glide:annotations", version.ref = "glideVersion" }
@@ -169,8 +174,8 @@ banner = { module = "io.github.youth5201314:banner", version.ref = "bannerVersio
 #BRVAH https://github.com/CymChad/BaseRecyclerViewAdapterHelper
 brvah = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version.ref = "brvahVersion" }
 
+#MMKV
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkvVersion" }
-
 
 #Gradle插件
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
@@ -181,13 +186,14 @@ theRouter-plugin = { module = "cn.therouter:plugin", version.ref = "theRouterVer
 # 用途: 通过创建包（bundle），您可以将相关的依赖分组在一起，然后在项目的不同模块中一次性引入这些依赖。
 # 这对于管理那些经常一起使用的库非常有用，如测试库集合、日志库集合等。
 [bundles]
-appcompatBundles = ["appcompat", "supportV4", "coreKtx", "activityKtx", "activity", "fragment", "fragmentKtx", "multidex"]
+appcompatBundles = ["appcompat", "supportV4", "coreKtx", "activityKtx", "activity", "fragment", "fragmentKtx", "multidex", "startup-runtime"]
 lifecycleBundles = ["lifecycle-runtime", "lifecycle-runtimektx", "lifecycle-livedata", "lifecycle-livedataKtx", "lifecycle-viewModel", "lifecycle-viewModelKtx", "lifecycle-viewModelSavedState"]
 widgetBundles = ["constraintLayout", "recyclerView", "cardView", "material", "viewpager", "viewpager2"]
 kotlinBundles = ["stdlib", "reflect", "stdlibJdk7", "stdlibJdk8", "coroutines-core", "coroutines-android"]
 navigationBundles = ["navigation-fragment", "navigation-ui", "navigation-dynamic", "navigation-dynamicRuntime", "navigation-testing"]
 dataStoreBundles = ["datastore-core", "datastore-preferences"]
 retrofitBundles = ["retrofit-core", "retrofit-gson", "gson", "gsonFactory"]
+okhttpBundles = ["okhttp3", "okhttp3-logging"]
 glideBundles = ["glide-core", "glide-annotation", "glide-integration"]
 imageSelectorBundles = ["imageSelector-core", "imageSelector-compress", "imageSelector-ucrop"]
 refreshBundles = ["smartRefresh-core", "smartRefresh-header"]
