@@ -1,4 +1,4 @@
-package com.wuc.lib_base.utils
+package com.wuc.lib_base.utils.mmkv
 
 import android.content.Context
 import android.os.Parcelable

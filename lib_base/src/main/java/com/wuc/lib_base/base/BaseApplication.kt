@@ -3,7 +3,7 @@ package com.wuc.lib_base.base
 import android.app.Application
 import com.wuc.lib_base.BuildConfig
 import com.wuc.lib_base.helper.AppHelper
-import com.wuc.lib_base.utils.MMKVUtil
+import com.wuc.lib_base.utils.mmkv.MMKVUtil
 
 /**
  * @author: wuc
@@ -15,6 +15,5 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         AppHelper.init(this, BuildConfig.DEBUG)
-        MMKVUtil.init(this)
     }
 }
