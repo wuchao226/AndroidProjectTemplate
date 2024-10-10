@@ -1,0 +1,24 @@
+apply from: rootProject.file('configLib.gradle')
+
+android {
+    namespace 'com.wuc.lib_base'
+}
+
+dependencies {
+    //限制范围，使用引擎类封装使用
+    api(libs.bundles.retrofitBundles)
+    implementation(libs.bundles.dataStoreBundles)
+    implementation(libs.bundles.imageSelectorBundles)
+    implementation(libs.bundles.glideBundles)
+    kapt(libs.glide.compiler)
+    implementation(libs.toaster)
+    implementation(libs.xxPermissions)
+    implementation(libs.bundles.navigationBundles)
+
+    //其他
+    api(libs.bundles.xpopupBundles)
+    api(libs.mmkv)
+    api(libs.banner)
+    api(libs.brvah)
+    api(libs.bundles.refreshBundles)
+}

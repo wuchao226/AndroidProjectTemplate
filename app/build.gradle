@@ -1,0 +1,12 @@
+apply from: rootProject.file('configRunning.gradle')
+
+android {
+    namespace = "com.wuc.project"
+    defaultConfig {
+        applicationId = libs.versions.applicationId.get()
+    }
+}
+
+dependencies {
+    implementation(project(":lib_base"))
+}
