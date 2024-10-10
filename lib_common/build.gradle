@@ -1,0 +1,8 @@
+apply from: rootProject.file('configLib.gradle')
+android {
+    namespace 'com.wuc.lib_common'
+}
+
+dependencies {
+    api project(path: ':lib_base')
+}
