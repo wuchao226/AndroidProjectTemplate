@@ -28,6 +28,7 @@ lateinit var application: Application
 // 获取包名
 inline val packageName: String get() = application.packageName
 
+// 获取当前 App 的 [PackageInfo]
 inline val packageInfo: PackageInfo
     get() = application.packageManager.getPackageInfo(packageName, 0)
 

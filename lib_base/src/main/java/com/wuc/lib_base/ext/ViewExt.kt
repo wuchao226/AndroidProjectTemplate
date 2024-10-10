@@ -1,5 +1,8 @@
 package com.wuc.lib_base.ext
 
+import android.animation.Animator
+import android.animation.IntEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.res.TypedArray
 import android.graphics.Bitmap
@@ -28,7 +31,7 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * 这个文件定义了一些扩展函数和属性，用于增强 View 的功能。
+ * View相关的扩展方法
  * 包括防止重复点击、增加点击区域、设置圆角、判断触摸位置、获取自定义属性等。
  * 作者：wuc
  * 日期：2024/10/9
@@ -48,20 +51,41 @@ fun List<View>.doOnDebouncingClick(
 ) =
     forEach { it.doOnDebouncingClick(clickIntervals, isSharingIntervals, block) }
 
-// 为 View 扩展一个函数，设置防抖点击事件
+
+/**
+ * 给 [View] 设置带有防抖效果的点击事件
+ *
+ * @receiver [View]
+ * @param clickIntervals Int 防抖间隔时间，单位是毫秒，默认值为全局变量 debouncingClickIntervals
+ * @param isSharingIntervals Boolean 是否共享点击间隔时间，默认为 false
+ * @param block () -> Unit 具体的点击事件
+ */
 fun View.doOnDebouncingClick(
     clickIntervals: Int = debouncingClickIntervals,
     isSharingIntervals: Boolean = false,
     block: () -> Unit
-) =
+) {
+    // 设置点击监听器
     setOnClickListener {
-        val view = if (isSharingIntervals) context.asActivity()?.window?.decorView ?: this else this
+        // 根据 isSharingIntervals 参数决定使用哪个 View 记录点击时间
+        val view = if (isSharingIntervals) {
+            // 如果共享点击间隔时间，则使用 Activity 的 decorView
+            context.asActivity()?.window?.decorView ?: this
+        } else {
+            // 否则使用当前 View
+            this
+        }
+        // 获取当前时间
         val currentTime = System.currentTimeMillis()
+        // 判断当前时间与上次点击时间的间隔是否大于 clickIntervals
         if (currentTime - (view.lastClickTime ?: 0L) > clickIntervals) {
+            // 更新上次点击时间
             view.lastClickTime = currentTime
+            // 执行点击事件
             block()
         }
     }
+}
 
 // 为 List<View> 扩展一个函数，设置普通点击事件
 inline fun List<View>.doOnClick(crossinline block: () -> Unit) = forEach { it.doOnClick(block) }
@@ -77,7 +101,14 @@ fun List<View>.doOnDebouncingLongClick(
 ) =
     forEach { it.doOnDebouncingLongClick(clickIntervals, isSharingIntervals, block) }
 
-// 为 View 扩展一个函数，设置防抖长按事件
+/**
+ * 给 [View] 设置带有防抖效果的长按点击事件
+ *
+ * @receiver [View]
+ * @param clickIntervals Int 防抖间隔时间，单位是毫秒，默认值为全局变量 debouncingClickIntervals
+ * @param isSharingIntervals Boolean 是否共享点击间隔时间，默认为 false
+ * @param block () -> Unit 具体的点击事件
+ */
 fun View.doOnDebouncingLongClick(
     clickIntervals: Int = debouncingClickIntervals,
     isSharingIntervals: Boolean = false,
@@ -312,40 +343,6 @@ class MultiTouchDelegate(bound: Rect, delegateView: View) : TouchDelegate(bound,
     }
 }
 
-/*** 可见性相关 ****/
-fun View.gone() {
-    visibility = View.GONE
-}
-
-fun View.visible() {
-    visibility = View.VISIBLE
-}
-
-fun View.invisible() {
-    visibility = View.INVISIBLE
-}
-
-val View.isGone: Boolean
-    get() {
-        return visibility == View.GONE
-    }
-
-val View.isVisible: Boolean
-    get() {
-        return visibility == View.VISIBLE
-    }
-
-val View.isInvisible: Boolean
-    get() {
-        return visibility == View.INVISIBLE
-    }
-
-/**
- * 切换View的可见性
- */
-fun View.toggleVisibility() {
-    visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
-}
 
 /**
  * 获取View的截图, 支持获取整个RecyclerView列表的长截图
@@ -395,4 +392,226 @@ fun View.toBitmap(): Bitmap {
             screenshot //return
         }
     }
+}
+
+/*************************************** View可见性相关 ********************************************/
+/**
+ * 隐藏View
+ * @receiver View
+ */
+fun View.gone() {
+    visibility = View.GONE
+}
+
+/**
+ * 显示View
+ * @receiver View
+ */
+fun View.visible() {
+    visibility = View.VISIBLE
+}
+
+/**
+ * View不可见但存在原位置
+ * @receiver View
+ */
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
+val View.isGone: Boolean
+    get() {
+        return visibility == View.GONE
+    }
+
+val View.isVisible: Boolean
+    get() {
+        return visibility == View.VISIBLE
+    }
+
+val View.isInvisible: Boolean
+    get() {
+        return visibility == View.INVISIBLE
+    }
+
+/**
+ * 切换View的可见性
+ */
+fun View.toggleVisibility() {
+    visibility = if (visibility == View.GONE) View.VISIBLE else View.GONE
+}
+
+/**
+ * 设置 View 为 [View.VISIBLE]
+ * 如果 [isVisible] 值为true，将 [View.setVisibility] 设置为 [View.VISIBLE],反之为 [View.GONE]
+ *
+ * @receiver View
+ * @param isVisible Boolean 是否显示
+ */
+fun View.setVisible(isVisible: Boolean) {
+    if (isVisible) visible() else gone()
+}
+
+/**
+ * 设置 View 为 [View.GONE]
+ * 如果 [isGone] 值为true，将 [View.setVisibility] 设置为 [View.GONE],反之为 [View.VISIBLE]
+ *
+ * @receiver View
+ * @param isGone Boolean 是否隐藏
+ */
+fun View.setGone(isGone: Boolean) {
+    if (isGone) visible() else gone()
+}
+
+
+/*************************************** View宽高相关 ********************************************/
+/**
+ * 设置 View 的高度
+ * @receiver View
+ * @param height Int 目标高度
+ * @return View
+ */
+fun View.height(height: Int): View {
+    val params = layoutParams ?: ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    params.height = height
+    layoutParams = params
+    return this
+}
+
+/**
+ * 设置View的宽度
+ * @receiver View
+ * @param width Int 目标宽度
+ * @return View
+ */
+fun View.width(width: Int): View {
+    val params = layoutParams ?: ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    params.width = width
+    layoutParams = params
+    return this
+}
+
+/**
+ * 设置View的宽度和高度
+ * @receiver View
+ * @param width Int 要设置的宽度
+ * @param height Int 要设置的高度
+ * @return View
+ */
+fun View.widthAndHeight(width: Int, height: Int): View {
+    val params = layoutParams ?: ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+    params.width = width
+    params.height = height
+    layoutParams = params
+    return this
+}
+
+/**
+ * 设置宽度，带有过渡动画
+ * @param targetValue 目标宽度
+ * @param duration 时长
+ * @param action 可选行为
+ * @return 动画
+ */
+fun View.animateWidth(
+    targetValue: Int, duration: Long = 400, listener: Animator.AnimatorListener? = null,
+    action: ((Float) -> Unit)? = null
+): ValueAnimator? {
+    var animator: ValueAnimator? = null
+    post {
+        animator = ValueAnimator.ofInt(width, targetValue).apply {
+            addUpdateListener {
+                width(it.animatedValue as Int)
+                action?.invoke((it.animatedFraction))
+            }
+            if (listener != null) addListener(listener)
+            setDuration(duration)
+            start()
+        }
+    }
+    return animator
+}
+
+/**
+ * 设置高度，带有过渡动画
+ * @param targetValue 目标高度
+ * @param duration 时长
+ * @param action 可选行为
+ * @return 动画
+ */
+fun View.animateHeight(
+    targetValue: Int,
+    duration: Long = 400,
+    listener: Animator.AnimatorListener? = null,
+    action: ((Float) -> Unit)? = null
+): ValueAnimator? {
+    var animator: ValueAnimator? = null
+    post {
+        animator = ValueAnimator.ofInt(height, targetValue).apply {
+            addUpdateListener {
+                height(it.animatedValue as Int)
+                action?.invoke((it.animatedFraction))
+            }
+            if (listener != null) addListener(listener)
+            setDuration(duration)
+            start()
+        }
+    }
+    return animator
+}
+
+/**
+ * 设置宽度和高度，带有过渡动画
+ * @param targetWidth 目标宽度
+ * @param targetHeight 目标高度
+ * @param duration 时长
+ * @param action 可选行为
+ * @return 动画
+ */
+fun View.animateWidthAndHeight(
+    targetWidth: Int,
+    targetHeight: Int,
+    duration: Long = 400,
+    listener: Animator.AnimatorListener? = null,
+    action: ((Float) -> Unit)? = null
+): ValueAnimator? {
+    var animator: ValueAnimator? = null
+    post {
+        val startHeight = height
+        val evaluator = IntEvaluator()
+        animator = ValueAnimator.ofInt(width, targetWidth).apply {
+            addUpdateListener {
+                widthAndHeight(
+                    it.animatedValue as Int,
+                    evaluator.evaluate(it.animatedFraction, startHeight, targetHeight)
+                )
+                action?.invoke((it.animatedFraction))
+            }
+            if (listener != null) addListener(listener)
+            setDuration(duration)
+            start()
+        }
+    }
+    return animator
+}
+
+/*************************************** View其他 ********************************************/
+/**
+ * 获取View id
+ */
+fun View.getViewId(): Int {
+    var id = id
+    if (id == View.NO_ID) {
+        id = View.generateViewId()
+    }
+    return id
 }
