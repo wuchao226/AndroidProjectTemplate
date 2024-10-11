@@ -38,3 +38,24 @@ android {
     resourcePrefix "前缀_"
 }
 ```
+## 版本管理相关
+如果你的项目是小项目，或者组件比较少，或者不是组件化项目，我推荐你使用 Catalogs + Kotlin DSL 的方式，相对更完美，只需要在每一个模块都写一份配置文件而已。
+
+如果你的项目是大型项目，并且有很多的子组件，那么我推荐你使用 Catalogs + Groovy DSL 的方式，封装一份 gradle 基类方便统一集中的管理。
+
+- configBasic.gradle:   
+  封装一个基类的公共配置,（一般不直接使用），只是给别的配置文件继承使用
+- configModule.gradle：  
+  子模块的gradle基类
+- configRunning.gradle：  
+  app宿主或独立运行模块需要的依赖, 主要是配置一些签名，编译信息
+- configLib.gradle：  
+  底层依赖库的gradle配置, 一般用于第三方的依赖库Lib基本的继承这个配置
+### BuildSrc + Kotlin DSL 
+[Android项目开发模板开源与相关介绍](https://juejin.cn/post/7341840038964477971)
+
+BuildSrc + Kotlin DSL 的方案的主要特点是编译会稍慢，可能需要处理依赖版本冲突问题，好处是熟悉的Kotlin语法，与良好的代码导航支持
+### Catalogs + Groovy DSL
+Catalogs + Groovy DSL 的方案特点是虽然支持了代码导航，但是支持程度没有 Kotlin DSL 好，好处是编译速度更快，都在一个 Project 中版本冲突问题会缓解。
+### Catalogs + Kotlin DSL
+Catalogs + Kotlin DSL 的方案特点中和个上面两种方案的优点，无需新项目编译，完美的代码导航，友好的语言环境，但是无法像上面两种方案进行封装使用。

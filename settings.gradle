@@ -31,3 +31,4 @@ include(":lib_base")
 include(":ft_home")
 include ':lib_common'
 include ':lib_glide'
+include ':lib_room'

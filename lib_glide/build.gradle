@@ -5,6 +5,5 @@ android {
 }
 
 dependencies {
-    api project(path: ':lib_base')
     implementation(libs.bundles.glideBundles)
 }

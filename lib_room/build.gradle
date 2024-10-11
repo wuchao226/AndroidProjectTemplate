@@ -1,0 +1,11 @@
+apply from: rootProject.file('configLib.gradle')
+
+android {
+    namespace 'com.wuc.lib_room'
+}
+
+dependencies {
+    implementation(libs.room.runtime)
+    kapt(libs.room.compiler)
+    implementation project(path: ':lib_common')
+}
