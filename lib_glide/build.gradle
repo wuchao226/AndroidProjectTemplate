@@ -1,0 +1,10 @@
+apply from: rootProject.file('configLib.gradle')
+
+android {
+    namespace 'com.wuc.lib_glide'
+}
+
+dependencies {
+    api project(path: ':lib_base')
+    implementation(libs.bundles.glideBundles)
+}
