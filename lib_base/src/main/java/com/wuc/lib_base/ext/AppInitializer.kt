@@ -21,7 +21,6 @@ class AppInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         application = context as Application
         IDataStoreOwner.application = context as Application
-        MMKV.initialize(context)
         // 注册APP前后台切换监听
         appFrontBackRegister()
     }

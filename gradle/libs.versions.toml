@@ -35,6 +35,7 @@ dataStoreVersion = "1.1.1"
 workVersion = "2.8.1"
 mmkvVersion = "1.3.9"
 startupVersion = "1.2.0"
+autoService = "1.1.1"
 
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -176,6 +177,11 @@ brvah = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version.r
 
 #MMKV
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkvVersion" }
+
+#自动生成SPI暴露服务文件
+auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "autoService" }
+auto-service-annotations = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
+
 
 #Gradle插件
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }

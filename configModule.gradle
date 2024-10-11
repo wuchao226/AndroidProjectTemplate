@@ -7,6 +7,6 @@ apply plugin: 'com.android.library'
 apply from: rootProject.file('configBasic.gradle')  //重复的配置统一由基类提供
 
 dependencies {
-    //Module模块默认添加Service模块的
-//    implementation(project(":cs_service"))
+    //Module模块默认添加 lib_common 模块的
+    implementation(project(":lib_common"))
 }

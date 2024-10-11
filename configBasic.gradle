@@ -55,6 +55,9 @@ dependencies {
     implementation(libs.theRouter)
     kapt(libs.theRouter.apt)
 
+    implementation(libs.auto.service)
+    kapt(libs.auto.service.annotations)
+
     //junit
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidJunit)

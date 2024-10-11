@@ -46,6 +46,6 @@ android {
 }
 
 dependencies {
-    // Module模块默认添加Service模块的
-    // implementation(project(":cs-service"))
+    //Module模块默认添加 lib_common 模块的
+    implementation(project(":lib_common"))
 }
