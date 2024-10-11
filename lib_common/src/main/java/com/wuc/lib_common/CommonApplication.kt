@@ -3,10 +3,14 @@ package com.wuc.lib_common
 import android.app.Application
 import android.content.Context
 import com.google.auto.service.AutoService
+import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 import com.wuc.lib_base.BaseApplication
 import com.wuc.lib_base.app.ApplicationLifecycle
 import com.wuc.lib_base.ext.application
+import com.wuc.lib_base.log.LogConfig
+import com.wuc.lib_base.log.LogManager
+import com.wuc.lib_base.log.printer.ConsolePrinter
 import com.wuc.lib_base.utils.ProcessUtils
 
 /**
@@ -47,8 +51,10 @@ class CommonApplication : ApplicationLifecycle {
             list.add { initMMKV() }
             list.add { initTheRouter() }
         }
+        list.add { initLog() }
         return list
     }
+
     /**
      * 不需要立即初始化的放在这里进行后台初始化
      */
@@ -63,11 +69,33 @@ class CommonApplication : ApplicationLifecycle {
         MMKV.initialize(application)
         return "MMKV -->> "
     }
+
     /**
      * 阿里路由 ARouter 初始化
      */
     private fun initTheRouter(): String {
 
         return "TheRouter -->> init complete"
+    }
+
+    /**
+     * 初始化 Log
+     */
+    private fun initLog(): String {
+        LogManager.init(
+            object : LogConfig() {
+                override fun injectJsonParser(): JsonParser {
+                    return JsonParser { src -> Gson().toJson(src) }
+                }
+
+                override fun includeThread(): Boolean = true
+
+                override fun enable(): Boolean = true
+
+                override fun stackTraceDepth(): Int = 5
+            },
+            ConsolePrinter()
+        )
+        return "Log -->> init complete"
     }
 }

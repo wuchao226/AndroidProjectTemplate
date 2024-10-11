@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.wuc.lib_base.ext.application
+import com.wuc.lib_base.log.WLogUtils
 import java.lang.reflect.Field
 
 /**
@@ -52,7 +53,7 @@ object AndroidBugFixUtils {
                 }
             } catch (t: Throwable) {
                 // 捕获异常并记录日志，便于调试
-                Log.e("fixSoftInputLeaks", "Failed to fix leak for field: $leakView", t)
+                WLogUtils.et("fixSoftInputLeaks", "Failed to fix leak for field: $leakView", t)
             }
         }
     }

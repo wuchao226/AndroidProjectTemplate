@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.wuc.lib_base.app.LoadModuleProxy
 import com.wuc.lib_base.helper.AppHelper
+import com.wuc.lib_base.log.WLogUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -54,11 +55,11 @@ class BaseApplication : Application() {
                 // 记录每个依赖项初始化所花费的时间
                 val dependTimeMillis = measureTimeMillis { dependInfo = it() }
                 // 打印日志，记录依赖项的初始化信息和时间
-                Log.d("BaseApplication", "initDepends: $dependInfo : $dependTimeMillis ms")
+                WLogUtils.d("BaseApplication", "initDepends: $dependInfo : $dependTimeMillis ms")
             }
         }
         // 打印日志，记录所有依赖项初始化完成所花费的总时间
-        Log.d("BaseApplication", "初始化完成 $allTimeMillis ms")
+        WLogUtils.d("BaseApplication", "初始化完成 $allTimeMillis ms")
     }
 
     override fun onTerminate() {
