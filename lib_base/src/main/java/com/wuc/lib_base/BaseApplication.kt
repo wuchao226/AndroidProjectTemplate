@@ -6,6 +6,8 @@ import android.util.Log
 import com.wuc.lib_base.app.LoadModuleProxy
 import com.wuc.lib_base.helper.AppHelper
 import com.wuc.lib_base.log.WLogUtils
+import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
+import com.wuc.lib_base.network_intercept.NetWorkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -18,6 +20,14 @@ import kotlin.system.measureTimeMillis
  * @desc: 基类的Application
  */
 class BaseApplication : Application() {
+    companion object {
+        //此变量会在网络监听中被动态赋值
+        lateinit var networkType: NetWorkUtil.NetworkType
+        //检查当前是否有网络
+        fun checkHasNet(): Boolean {
+            return networkType != NetWorkUtil.NetworkType.NETWORK_NO && networkType != NetWorkUtil.NetworkType.NETWORK_UNKNOWN
+        }
+    }
     private val mCoroutineScope by lazy(mode = LazyThreadSafetyMode.NONE) { MainScope() }
 
     private val mLoadModuleProxy by lazy(mode = LazyThreadSafetyMode.NONE) { LoadModuleProxy() }
@@ -29,6 +39,10 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        //获取到全局的网络状态
+        networkType = NetWorkUtil.getNetworkType(this@BaseApplication.applicationContext)
+        //网络监听
+        NetWorkMonitorManager.init(this)
         AppHelper.init(this, BuildConfig.DEBUG)
         mLoadModuleProxy.onCreate(this)
         // 策略初始化第三方依赖
