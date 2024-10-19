@@ -26,7 +26,7 @@ abstract class BaseViewBindingReflectFragment<VB : ViewBinding> : AbsFragment() 
         val type: ParameterizedType = javaClass.genericSuperclass as ParameterizedType
         val vbClass: Class<VB> = type.saveAs<ParameterizedType>().actualTypeArguments[0].saveAs<Class<VB>>()
         try {
-            vbClass.getDeclaredMethod("inflate", LayoutInflater::class.java)
+            vbClass.getDeclaredMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
         } catch (e: NoSuchMethodException) {
             e.printStackTrace()
             null // 方法未找到
