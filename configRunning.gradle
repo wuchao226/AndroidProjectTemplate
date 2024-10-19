@@ -3,7 +3,7 @@
  * 上层的配置和module_config同级别-供真正能运行的模块配置，如app组件
  */
 apply plugin: 'com.android.application'
-apply plugin: 'therouter'
+//apply plugin: 'therouter'
 
 // 重复的配置统一由基类提供
 apply from: rootProject.file('configBasic.gradle')

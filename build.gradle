@@ -21,10 +21,12 @@ buildscript {
     dependencies {
         classpath(libs.androidGradlePlugin)
         classpath(libs.kotlin.plugin)
-        classpath(libs.theRouter.plugin)
+//        classpath(libs.theRouter.plugin)
     }
-
 }
+//plugins {
+//    id 'cn.therouter.agp8' version "1.2.2" apply false
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir
