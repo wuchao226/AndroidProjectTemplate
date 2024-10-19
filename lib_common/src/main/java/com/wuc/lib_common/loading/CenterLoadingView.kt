@@ -12,7 +12,7 @@ import com.wuc.lib_common.databinding.DialogLoadingBinding
 /**
  * 通用加载中弹窗
  */
-class CenterLoadingView(context: Context, theme: Int) : Dialog(context, R.style.loading_dialog) {
+class CenterLoadingView(context: Context) : Dialog(context, R.style.loading_dialog) {
 
     private var mBinding: DialogLoadingBinding
     private var animation: Animation? = null

@@ -8,5 +8,5 @@ android {
 }
 
 dependencies {
-
+    implementation project(path: ':ft_home')
 }

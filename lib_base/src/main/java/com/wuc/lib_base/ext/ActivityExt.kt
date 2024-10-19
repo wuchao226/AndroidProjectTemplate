@@ -62,6 +62,9 @@ inline fun <reified T : Activity> Context.startActivity(
 inline fun <reified T> openActivity(context: Context, noinline block: (Intent.() -> Unit)? = null) {
     val intent = Intent(context, T::class.java)
     block?.invoke(intent)
+    if (context !is Activity) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
     context.startActivity(intent)
 }
 

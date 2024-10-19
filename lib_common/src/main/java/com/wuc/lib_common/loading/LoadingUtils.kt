@@ -16,7 +16,7 @@ class LoadingUtils(private val mContext: Context) {
      */
     fun showLoading(txt: String?) {
         if (loadView == null) {
-            loadView = CenterLoadingView(mContext, R.style.dialog)
+            loadView = CenterLoadingView(mContext)
             // loadView.requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
         if (loadView?.isShowing == true) {
