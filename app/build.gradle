@@ -9,4 +9,9 @@ android {
 
 dependencies {
     implementation project(path: ':ft_home')
+    implementation project(path: ':lib_base')
+    implementation project(path: ':lib_common')
+    implementation project(path: ':lib_glide')
+    implementation project(path: ':lib_room')
+
 }

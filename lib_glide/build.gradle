@@ -6,4 +6,5 @@ android {
 
 dependencies {
     implementation(libs.bundles.glideBundles)
+    implementation project(path: ':lib_base')
 }

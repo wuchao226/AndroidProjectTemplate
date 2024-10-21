@@ -24,33 +24,6 @@ inline fun <reified T> Context.intentOf(vararg pairs: Pair<String, *>): Intent =
 inline fun <reified T> Context.intentOf(bundle: Bundle): Intent =
     Intent(this, T::class.java).putExtras(bundle)
 
-/**
- * 通过 Intent 的 extras 获取可空的参数
- * 用法：
- * val name: String? by intentExtras("name", String::class)
- * val age: Int? by intentExtras("age", Int::class)
- */
-fun <T> Activity.intentExtras(name: String) = lazy<T?> {
-    intent.extras[name]
-}
-
-
-/**
- * 通过 Intent 的 extras 获取含默认值的参数
- * 用法：val count: Int by intentExtras(KEY_COUNT, default = 0)
- */
-fun <T> Activity.intentExtras(name: String, default: T) = lazy {
-    intent.extras[name] ?: default
-}
-
-// 通过 Intent 的 extras 获取人为保证非空的参数
-/**
- * 通过 Intent 的 extras 获取人为保证非空的参数
- * 用法：val name: String by safeIntentExtras("name")
- */
-fun <T> Activity.safeIntentExtras(name: String) = lazy<T> {
-    checkNotNull(intent.extras[name]) { "No intent value for key \"$name\"" }
-}
 
 /**
  * 拨号（并未呼叫），无需权限

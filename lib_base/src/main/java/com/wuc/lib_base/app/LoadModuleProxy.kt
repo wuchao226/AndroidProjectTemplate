@@ -2,7 +2,7 @@ package com.wuc.lib_base.app
 
 import android.app.Application
 import android.content.Context
-import com.wuc.lib_base.log.WLogUtils
+import android.util.Log
 import java.util.ServiceLoader
 
 /**
@@ -20,7 +20,6 @@ class LoadModuleProxy : ApplicationLifecycle {
      */
     override fun onAttachBaseContext(context: Context) {
         mLoader.forEach {
-            WLogUtils.d("ApplicationInit", it.toString())
             it.onAttachBaseContext(context)
         }
     }
