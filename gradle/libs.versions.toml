@@ -58,6 +58,7 @@ gsonFactoryVersion = "9.6"
 gsonVersion = "2.10.1"
 bannerVersion = "2.2.3"
 brvahVersion = "4.1.4"
+immersionbarVersion = "3.2.2"
 
 # 定义项目依赖的库
 # 用途: 在这个部分，您可以具体列出项目需要的库及其坐标（group，name，[version]）。
@@ -149,6 +150,7 @@ okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okht
 okhttp3-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpVersion" }
 
 #Glide https://github.com/bumptech/glide
+#官方使用文档：https://github.com/Muyangmin/glide-docs-cn
 glide-core = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
 glide-annotation = { module = "com.github.bumptech.glide:annotations", version.ref = "glideVersion" }
 glide-integration = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glideVersion" }
@@ -185,6 +187,10 @@ brvah = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version.r
 #MMKV
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkvVersion" }
 
+#沉浸式框架：https://github.com/gyf-dev/ImmersionBar
+immersionbar = { group = "com.geyifeng.immersionbar", name = "immersionbar", version.ref = "immersionbarVersion" }
+immersionbarKtx = { group = "com.geyifeng.immersionbar", name = "immersionbar-ktx", version.ref = "immersionbarVersion" }
+
 #自动生成SPI暴露服务文件
 auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "autoService" }
 auto-service-annotations = { group = "com.google.auto.service", name = "auto-service-annotations", version.ref = "autoService" }
@@ -212,6 +218,7 @@ imageSelectorBundles = ["imageSelector-core", "imageSelector-compress", "imageSe
 refreshBundles = ["smartRefresh-core", "smartRefresh-header"]
 xpopupBundles = ["xpopup-core", "xpopup-picker"]
 roomBundles = ["room-runtime", "roomktx"]
+immersionbarBundles = ["immersionbar", "immersionbarKtx"]
 
 # 定义Gradle插件的依赖
 # 用途: 在这个部分，您可以列出项目中使用的Gradle插件及其版本。同样，您可以利用 [versions] 中定义的版本号来统一管理插件版本。

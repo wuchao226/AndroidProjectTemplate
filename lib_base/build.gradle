@@ -22,4 +22,5 @@ dependencies {
     api(libs.banner)
     api(libs.brvah)
     api(libs.bundles.refreshBundles)
+    api(libs.bundles.immersionbarBundles)
 }

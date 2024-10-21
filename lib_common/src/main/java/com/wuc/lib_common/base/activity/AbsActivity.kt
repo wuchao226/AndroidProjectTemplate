@@ -3,6 +3,7 @@ package com.wuc.lib_common.base.activity
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import com.gyf.immersionbar.ImmersionBar
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
 import com.wuc.lib_common.R
 import com.wuc.lib_common.loading.LoadingUtils
@@ -16,6 +17,9 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
     private val TAG: String
         get() = this::class.java.simpleName
 
+    /** 状态栏沉浸 */
+    private var immersionBar: ImmersionBar? = null
+
     private val dialogUtils by lazy {
         LoadingUtils(this)
     }
@@ -23,6 +27,7 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentLayout()
+        initImmersionBar()
         initView(savedInstanceState)
         initData()
         if (needRegisterNetworkChangeObserver()) {
@@ -55,6 +60,49 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
      */
     open fun initData() {
 
+    }
+    /**
+     * 初始化沉浸式状态栏
+     */
+    private fun initImmersionBar() {
+        if (isStatusBarEnabled()) {
+            getStatusBarConfig().init()
+        }
+    }
+
+    /**
+     * 是否使用沉浸式状态栏
+     */
+    protected open fun isStatusBarEnabled(): Boolean {
+        return true
+    }
+    /**
+     * 状态栏字体深色模式
+     */
+    open fun isStatusBarDarkFont(): Boolean {
+        return true
+    }
+
+    /**
+     * 获取状态栏沉浸的配置对象
+     */
+    open fun getStatusBarConfig():ImmersionBar {
+        if (immersionBar == null) {
+            immersionBar = createStatusBarConfig()
+        }
+        return immersionBar!!
+    }
+    /**
+     * 初始化沉浸式状态栏
+     */
+   protected open fun createStatusBarConfig(): ImmersionBar {
+        return ImmersionBar.with(this)
+            // 默认状态栏字体颜色为黑色
+           .statusBarDarkFont(isStatusBarDarkFont())
+            // 指定导航栏背景颜色
+           .navigationBarColor(R.color.white)
+            // 状态栏字体和导航栏内容自动变色，必须指定状态栏颜色和导航栏颜色才可以自动变色
+           .autoDarkModeEnable(true, 0.2f)
     }
 
     /**
