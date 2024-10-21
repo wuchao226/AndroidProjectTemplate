@@ -121,6 +121,7 @@ startup-runtime = { group = "androidx.startup", name = "startup-runtime", versio
 
 #Room
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+roomktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 
 
@@ -210,6 +211,7 @@ glideBundles = ["glide-core", "glide-annotation", "glide-integration"]
 imageSelectorBundles = ["imageSelector-core", "imageSelector-compress", "imageSelector-ucrop"]
 refreshBundles = ["smartRefresh-core", "smartRefresh-header"]
 xpopupBundles = ["xpopup-core", "xpopup-picker"]
+roomBundles = ["room-runtime", "roomktx"]
 
 # 定义Gradle插件的依赖
 # 用途: 在这个部分，您可以列出项目中使用的Gradle插件及其版本。同样，您可以利用 [versions] 中定义的版本号来统一管理插件版本。

@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/dp_30"
+    android:orientation="vertical"
     tools:context=".fragment.MessageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_home_tab"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="消息" />
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:text="切换到首页 Tab" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_find_tab"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="切换到发现页 Tab" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_mine_tab"
+        style="@style/ButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/dp_30"
+        android:text="切换到我的页 Tab" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
