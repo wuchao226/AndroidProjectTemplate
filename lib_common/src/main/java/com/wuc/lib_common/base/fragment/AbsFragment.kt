@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.wuc.lib_base.ext.addStatusBarHeightToPaddingTop
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
 import com.wuc.lib_common.R
 import com.wuc.lib_common.loading.LoadingUtils
@@ -31,7 +32,10 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return getContentView(inflater, container)
+        val contentView = getContentView(inflater, container)
+        // contentView 顶部内边距增加状态栏高度
+        contentView.addStatusBarHeightToPaddingTop()
+        return contentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
