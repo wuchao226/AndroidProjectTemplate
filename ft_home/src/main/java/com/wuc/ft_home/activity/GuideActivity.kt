@@ -2,12 +2,14 @@ package com.wuc.ft_home.activity
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.ActivityGuideBinding
@@ -26,19 +28,27 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
         adapter.setData(listOf(R.drawable.guide_1_bg, R.drawable.guide_2_bg, R.drawable.guide_3_bg))
         mBinding.vpGuidePager.adapter = adapter
         mBinding.vpGuidePager.registerOnPageChangeCallback(mCallback)
+        mBinding.cvGuideIndicator.setViewPager(mBinding.vpGuidePager)
         mBinding.btnGuideComplete.doOnDebouncingClick {
             HomeActivity.start(this)
             finish()
         }
     }
+    override fun createStatusBarConfig(): ImmersionBar {
+        return super.createStatusBarConfig()
+            // 指定导航栏背景颜色
+            .navigationBarColor(R.color.white)
+    }
 
     private val mCallback: OnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            WLogUtils.it(
-                "guide",
-                "position = $position, positionOffset = $positionOffset, positionOffsetPixels = $positionOffsetPixels"
-            )
+            if (mBinding.vpGuidePager.currentItem != adapter.itemCount - 1 || positionOffsetPixels <= 0) {
+                return
+            }
+            mBinding.cvGuideIndicator.visibility = View.VISIBLE
+            mBinding.btnGuideComplete.visibility = View.INVISIBLE
+            mBinding.btnGuideComplete.clearAnimation()
         }
 
         override fun onPageScrollStateChanged(state: Int) {
@@ -47,7 +57,8 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
                 return
             }
             val lastItem = mBinding.vpGuidePager.currentItem == adapter.itemCount - 1
-            mBinding.btnGuideComplete.isVisible = lastItem
+            mBinding.cvGuideIndicator.visibility = if (lastItem) View.INVISIBLE else View.VISIBLE
+            mBinding.btnGuideComplete.visibility = if (lastItem) View.VISIBLE else View.INVISIBLE
             if (lastItem) {
                 // 按钮呼吸动效
                 val animation = ScaleAnimation(
