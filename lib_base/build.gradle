@@ -21,6 +21,7 @@ dependencies {
     api(libs.mmkv)
     api(libs.banner)
     api(libs.brvah)
+    api(libs.lottie)
     api(libs.bundles.refreshBundles)
     api(libs.bundles.immersionbarBundles)
 }

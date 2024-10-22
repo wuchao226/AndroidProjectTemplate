@@ -59,6 +59,7 @@ gsonVersion = "2.10.1"
 bannerVersion = "2.2.3"
 brvahVersion = "4.1.4"
 immersionbarVersion = "3.2.2"
+lottieVersion = "6.5.2"
 
 # 定义项目依赖的库
 # 用途: 在这个部分，您可以具体列出项目需要的库及其坐标（group，name，[version]）。
@@ -190,6 +191,12 @@ mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkvVersion" }
 #沉浸式框架：https://github.com/gyf-dev/ImmersionBar
 immersionbar = { group = "com.geyifeng.immersionbar", name = "immersionbar", version.ref = "immersionbarVersion" }
 immersionbarKtx = { group = "com.geyifeng.immersionbar", name = "immersionbar-ktx", version.ref = "immersionbarVersion" }
+
+
+#动画解析库：https://github.com/airbnb/lottie-android
+#动画资源：https://lottiefiles.com、https://icons8.com/animated-icons
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieVersion" }
+
 
 #自动生成SPI暴露服务文件
 auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "autoService" }

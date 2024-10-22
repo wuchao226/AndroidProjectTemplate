@@ -15,11 +15,11 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidProjectTemplate"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name="com.wuc.ft_home.HomeActivity"
-            android:launchMode="singleTask"
+            android:name="com.wuc.ft_home.splash.SplashActivity"
+            android:launchMode="singleTop"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -190,6 +190,13 @@ fun ComponentActivity.pressBackToNotExitApp(owner: LifecycleOwner = this) =
     doOnBackPressed(owner) { moveTaskToBack(false) }
 
 /**
+ * 禁用返回按钮
+ * 用法: ComponentActivity.pressBackToNotExit()
+ */
+fun ComponentActivity.disableBackPressed(owner: LifecycleOwner = this) =
+    doOnBackPressed(owner) { return@doOnBackPressed }
+
+/**
  * 监听手机的返回事件
  * 用法: ComponentActivity.doOnBackPressed {...}
  */

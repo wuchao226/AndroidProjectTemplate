@@ -42,7 +42,7 @@ class BaseApplication : Application() {
         networkType = NetWorkUtil.getNetworkType(this@BaseApplication.applicationContext)
         //网络监听
         NetWorkMonitorManager.init(this)
-        AppHelper.init(this, BuildConfig.DEBUG)
+        AppHelper.init(this)
         mLoadModuleProxy.onCreate(this)
         // 策略初始化第三方依赖
         initDepends()

@@ -1,6 +1,7 @@
 package com.wuc.lib_base.helper
 
 import android.app.Application
+import com.wuc.lib_base.BuildConfig
 
 /**
  * @author: wuc
@@ -9,10 +10,8 @@ import android.app.Application
  */
 object AppHelper {
     private lateinit var app: Application
-    private var isDebug = false
-    fun init(application: Application, isDebug: Boolean) {
+    fun init(application: Application) {
         this.app = application
-        this.isDebug = isDebug
     }
 
     /**
@@ -20,8 +19,18 @@ object AppHelper {
      */
     fun getApplication() = app
 
+
     /**
-     * 是否为debug环境
+     * 当前是否为调试模式
      */
-    fun isDebug() = isDebug
+    fun isDebug(): Boolean {
+        return BuildConfig.DEBUG
+    }
+
+    /**
+     * 获取当前构建的模式
+     */
+    fun getBuildType(): String {
+        return BuildConfig.BUILD_TYPE
+    }
 }
