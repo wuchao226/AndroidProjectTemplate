@@ -38,11 +38,11 @@
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
 #指定外部模糊字典
--obfuscationdictionary ./dictionary/proguard-1il.txt
+#-obfuscationdictionary ./dictionary/proguard-1il.txt
 #指定class模糊字典
--classobfuscationdictionary ./dictionary/proguard-o0O.txt
+#-classobfuscationdictionary ./dictionary/proguard-o0O.txt
 #指定package模糊字典
--packageobfuscationdictionary ./dictionary/proguard-socialism.txt
+#-packageobfuscationdictionary ./dictionary/proguard-socialism.txt
 
 
 # 所有 Android 控件的子类不要去混淆

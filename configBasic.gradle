@@ -8,7 +8,7 @@ apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdk Integer.parseInt(libs.versions.compileSdk.get())
-
+    // 资源目录存放指引：https://developer.android.google.cn/guide/topics/resources/providing-resources
     defaultConfig {
         minSdk = Integer.parseInt(libs.versions.minSdk.get())
         targetSdk = Integer.parseInt(libs.versions.targetSdk.get())
