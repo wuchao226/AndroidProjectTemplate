@@ -8,28 +8,30 @@ import com.wuc.ft_home.activity.GuideActivity
 import com.wuc.ft_home.databinding.FragmentMineBinding
 import com.wuc.lib_base.ext.doOnDebouncingClick
 import com.wuc.lib_base.ext.openActivity
-import com.wuc.lib_common.base.fragment.BaseViewBindingFragment
+import com.wuc.lib_common.base.fragment.BaseBindingFragment
+import com.wuc.lib_common.base.fragment.TitleBarFragment
 
 /**
  * @author: wuc
  * @date: 2024/10/18
  * @description:
  */
-class MineFragment : BaseViewBindingFragment<FragmentMineBinding>() {
+class MineFragment : TitleBarFragment<FragmentMineBinding>() {
     companion object {
         @JvmStatic
         fun newInstance() =
             MineFragment().apply {}
     }
 
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMineBinding {
-        return FragmentMineBinding.inflate(inflater, container, false)
-    }
-
     override fun initView(view: View, savedInstanceState: Bundle?) {
         mBinding.btnMineGuide.doOnDebouncingClick {
             openActivity<GuideActivity>(requireContext())
         }
+    }
+
+    override fun isStatusBarEnabled(): Boolean {
+        // 使用沉浸式状态栏
+        return !super.isStatusBarEnabled()
     }
 
 }

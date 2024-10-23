@@ -11,7 +11,7 @@ import androidx.viewbinding.ViewBinding
  * @date: 2024/9/13
  * @desc:基于 ViewBinding 和 ViewModel Fragment 基类
  */
-abstract class BaseVBVMReflectFragment<VB : ViewBinding, VM : ViewModel> : BaseViewBindingReflectFragment<VB>() {
+abstract class BaseBindingVMReflectFragment<VB : ViewBinding, VM : ViewModel> : BaseBindingReflectFragment<VB>() {
 
     protected lateinit var mViewModel: VM
 

@@ -1,27 +1,41 @@
 package com.wuc.lib_common.base.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.wuc.lib_base.ext.addStatusBarHeightToPaddingTop
+import androidx.lifecycle.Lifecycle
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
-import com.wuc.lib_common.R
-import com.wuc.lib_common.loading.LoadingUtils
+import com.wuc.lib_common.base.activity.AbsActivity
 
 /**
  * @author: wuc
  * @date: 2024/9/12
  * @desc: Fragment 基类
  */
-abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnectionChangedListener  {
+abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnectionChangedListener {
 
     protected var TAG: String? = this::class.java.simpleName
 
-    private val dialogUtils by lazy {
-        LoadingUtils(requireContext())
+    /** Activity 对象 */
+    private var activity: AbsActivity? = null
+
+    /** 根布局 */
+    private var rootView: View? = null
+
+    /** 当前是否加载过 */
+    private var loading: Boolean = false
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (requireActivity() is AbsActivity) {
+            activity = requireActivity() as AbsActivity
+        } else {
+            throw IllegalStateException("Activity must be subclass of AbsActivity")
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,16 +46,33 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val contentView = getContentView(inflater, container)
-        // contentView 顶部内边距增加状态栏高度
-        contentView.addStatusBarHeightToPaddingTop()
-        return contentView
+        loading = false
+        rootView = getContentView(inflater, container)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView(view, savedInstanceState)
-        initData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!loading) {
+            loading = true
+            initData()
+            onFragmentResume(true)
+            return
+        }
+        if (this.activity?.lifecycle?.currentState == Lifecycle.State.STARTED) {
+            onActivityResume()
+        } else {
+            onFragmentResume(false)
+        }
+    }
+
+    override fun getView(): View? {
+        return rootView
     }
 
     /**
@@ -70,17 +101,43 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
     open fun initData() {}
 
     /**
+     * Fragment 可见回调
+     *
+     * @param first                 是否首次调用
+     */
+    protected open fun onFragmentResume(first: Boolean) {}
+
+    /**
+     * Activity 可见回调
+     */
+    protected open fun onActivityResume() {}
+
+    /**
+     * 获取绑定的 Activity，防止出现 getActivity 为空
+     */
+    open fun getAttachActivity(): AbsActivity? {
+        return activity
+    }
+
+    /**
+     * 这个 Fragment 是否已经加载过了
+     */
+    open fun isLoading(): Boolean {
+        return loading
+    }
+
+    /**
      * 加载中……弹框
      */
     fun showLoading() {
-        showLoading(getString(R.string.default_loading))
+        getAttachActivity()?.showLoading()
     }
 
     /**
      * 加载提示框
      */
     fun showLoading(msg: String?) {
-        dialogUtils.showLoading(msg)
+        getAttachActivity()?.showLoading(msg)
     }
 
     /**
@@ -94,7 +151,7 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
      * 关闭提示框
      */
     fun dismissLoading() {
-        dialogUtils.dismissLoading()
+        getAttachActivity()?.dismissLoading()
     }
 
     /**
@@ -104,10 +161,21 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
         return false
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        rootView = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        loading = false
         if (needRegisterNetworkChangeObserver()) {
             NetWorkMonitorManager.unregisterObserver(this)
         }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        activity = null
     }
 }

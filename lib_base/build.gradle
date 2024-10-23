@@ -18,10 +18,11 @@ dependencies {
 
     //其他
     api(libs.bundles.xpopupBundles)
+    api(libs.bundles.refreshBundles)
+    api(libs.bundles.immersionbarBundles)
     api(libs.mmkv)
     api(libs.banner)
     api(libs.brvah)
     api(libs.lottie)
-    api(libs.bundles.refreshBundles)
-    api(libs.bundles.immersionbarBundles)
+    api(libs.titleBar)
 }

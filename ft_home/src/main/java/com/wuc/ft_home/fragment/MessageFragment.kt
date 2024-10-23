@@ -6,27 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
-import com.wuc.lib_common.base.fragment.BaseViewBindingFragment
+import com.wuc.lib_common.base.fragment.BaseBindingFragment
+import com.wuc.lib_common.base.fragment.TitleBarFragment
 
 /**
  * @author: wuc
  * @date: 2024/10/18
  * @description:
  */
-class MessageFragment : BaseViewBindingFragment<FragmentMessageBinding>() {
+class MessageFragment : TitleBarFragment<FragmentMessageBinding>() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            MessageFragment().apply {
-
-            }
+        fun newInstance() = MessageFragment().apply {}
     }
 
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentMessageBinding {
-        return FragmentMessageBinding.inflate(inflater, container, false)
+    override fun isStatusBarEnabled(): Boolean {
+        // 使用沉浸式状态栏
+        return !super.isStatusBarEnabled()
     }
-
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         mBinding.btnHomeTab.setOnClickListener {

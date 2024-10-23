@@ -15,7 +15,7 @@ import java.lang.reflect.ParameterizedType
  * @date: 2024/9/13
  * @desc: 通过反射 封装ViewBinding Fragment基类
  */
-abstract class BaseViewBindingReflectFragment<VB : ViewBinding> : AbsFragment() {
+abstract class BaseBindingReflectFragment<VB : ViewBinding> : AbsFragment() {
     private var _binding: VB? = null
     protected val mBinding: VB
         get() = requireNotNull(_binding) { "ViewBinding 对象为空，视图可能尚未创建或已销毁" }

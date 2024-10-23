@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
  * @date: 2024/9/13
  * @desc: ViewBinding Fragment 基类
  */
-abstract class BaseViewBindingFragment<VB : ViewBinding> : AbsFragment() {
+abstract class BaseBindingFragment<VB : ViewBinding> : AbsFragment() {
     private var _binding: VB? = null
     protected val mBinding: VB
         get() = requireNotNull(_binding) { "ViewBinding 对象为空，视图可能尚未创建或已销毁" }
