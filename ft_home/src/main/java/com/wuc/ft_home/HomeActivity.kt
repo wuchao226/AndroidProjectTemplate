@@ -22,10 +22,9 @@ import com.wuc.ft_home.fragment.MineFragment
 import com.wuc.lib_base.ext.design.doOnCustomTabSelected
 import com.wuc.lib_base.ext.design.setCustomView
 import com.wuc.lib_base.ext.pressBackTwiceToExitApp
-import com.wuc.lib_base.log.WLogUtils
-import com.wuc.lib_common.base.activity.BaseViewBindingReflectActivity
+import com.wuc.lib_common.base.activity.BaseBindingReflectActivity
 
-class HomeActivity : BaseViewBindingReflectActivity<ActivityHomeBinding>() {
+class HomeActivity : BaseBindingReflectActivity<ActivityHomeBinding>() {
 
     private var fragmentIndex: Int = 0
 
@@ -55,22 +54,21 @@ class HomeActivity : BaseViewBindingReflectActivity<ActivityHomeBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         pressBackTwiceToExitApp(toastText = R.string.home_exit_hint)
 
-        mBinding.viewPager2.adapter = object : FragmentStateAdapter(this) {
+        binding.viewPager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int = tabList.size
 
             override fun createFragment(position: Int): Fragment {
-                WLogUtils.d("createFragment: position = $position, fragment=${tabList[position].fragment}")
                 return tabList[position].fragment
             }
         }
         // smoothScroll = false -> 关闭平滑滚动效果
-        TabLayoutMediator(mBinding.tabLayout, mBinding.viewPager2, false, false) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager2, false, false) { tab, position ->
             tab.setCustomView<LayoutBottomTabBinding> {
                 tvTitle.text = getString(tabList[position].title)
                 ivIcon.setImageResource(tabList[position].icon)
             }
         }.attach()
-        mBinding.tabLayout.doOnCustomTabSelected<LayoutBottomTabBinding>(
+        binding.tabLayout.doOnCustomTabSelected<LayoutBottomTabBinding>(
             onTabSelected = { tab ->
                 if (tab.position == 2) {
                     ivUnreadState.isVisible = true
@@ -78,8 +76,8 @@ class HomeActivity : BaseViewBindingReflectActivity<ActivityHomeBinding>() {
             }
         )
         // 禁止viewpager2左右滑动
-        mBinding.viewPager2.isUserInputEnabled = false
-        mBinding.viewPager2.currentItem = HOME_INDEX
+        binding.viewPager2.isUserInputEnabled = false
+        binding.viewPager2.currentItem = HOME_INDEX
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -89,14 +87,13 @@ class HomeActivity : BaseViewBindingReflectActivity<ActivityHomeBinding>() {
     }
 
     private fun switchFragment(fragmentIndex: Int) {
-        WLogUtils.d("switchFragment: fragmentIndex = $fragmentIndex")
         if (fragmentIndex == -1) {
             return
         }
         when (fragmentIndex) {
             HOME_INDEX, FIND_INDEX, MESSAGE_INDEX, MINE_INDEX -> {
-//                mBinding.viewPager2.currentItem = fragmentIndex
-                mBinding.tabLayout.getTabAt(fragmentIndex)?.select()
+//                binding.viewPager2.currentItem = fragmentIndex
+                binding.tabLayout.getTabAt(fragmentIndex)?.select()
             }
         }
     }

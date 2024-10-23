@@ -12,13 +12,13 @@ import androidx.viewbinding.ViewBinding
  */
 abstract class BaseBindingFragment<VB : ViewBinding> : AbsFragment() {
     private var _binding: VB? = null
-    protected val mBinding: VB
-        get() = requireNotNull(_binding) { "ViewBinding 对象为空，视图可能尚未创建或已销毁" }
+    protected val binding: VB
+        get() = requireNotNull(_binding) { "The property of binding has been destroyed." }
 
     override fun getContentView(inflater: LayoutInflater, container: ViewGroup?): View {
         // 调用子类实现的 createViewBinding 方法
         _binding = createViewBinding(inflater, container)
-        return mBinding.root
+        return binding.root
     }
 
     /**

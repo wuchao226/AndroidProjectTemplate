@@ -27,13 +27,13 @@ class MessageFragment : TitleBarFragment<FragmentMessageBinding>() {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        mBinding.btnHomeTab.setOnClickListener {
+        binding.btnHomeTab.setOnClickListener {
             HomeActivity.start(requireContext(), HOME_INDEX)
         }
-        mBinding.btnFindTab.setOnClickListener {
+        binding.btnFindTab.setOnClickListener {
             HomeActivity.start(requireContext(), FIND_INDEX)
         }
-        mBinding.btnMineTab.setOnClickListener {
+        binding.btnMineTab.setOnClickListener {
             HomeActivity.start(requireContext(), MINE_INDEX)
         }
     }

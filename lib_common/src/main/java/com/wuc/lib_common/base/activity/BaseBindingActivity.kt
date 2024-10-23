@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
  * @date: 2024/9/9
  * @desc: ViewBinding Activity基类
  */
-abstract class BaseViewBindingActivity<VB : ViewBinding> : AbsActivity() {
+abstract class BaseBindingActivity<VB : ViewBinding> : AbsActivity() {
 
     private var _binding: VB? = null
     protected val mBinding: VB

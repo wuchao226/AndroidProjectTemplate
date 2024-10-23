@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
-import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.gyf.immersionbar.ImmersionBar
@@ -15,21 +14,20 @@ import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.ActivityGuideBinding
 import com.wuc.ft_home.databinding.GuideItemBinding
 import com.wuc.lib_base.ext.doOnDebouncingClick
-import com.wuc.lib_base.log.WLogUtils
 import com.wuc.lib_common.adapter.BaseBindViewHolder
 import com.wuc.lib_common.adapter.BaseRecyclerViewAdapter
-import com.wuc.lib_common.base.activity.BaseViewBindingReflectActivity
+import com.wuc.lib_common.base.activity.BaseBindingReflectActivity
 
-class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
+class GuideActivity : BaseBindingReflectActivity<ActivityGuideBinding>() {
 
     private val adapter: GuideAdapter = GuideAdapter()
 
     override fun initView(savedInstanceState: Bundle?) {
         adapter.setData(listOf(R.drawable.guide_1_bg, R.drawable.guide_2_bg, R.drawable.guide_3_bg))
-        mBinding.vpGuidePager.adapter = adapter
-        mBinding.vpGuidePager.registerOnPageChangeCallback(mCallback)
-        mBinding.cvGuideIndicator.setViewPager(mBinding.vpGuidePager)
-        mBinding.btnGuideComplete.doOnDebouncingClick {
+        binding.vpGuidePager.adapter = adapter
+        binding.vpGuidePager.registerOnPageChangeCallback(mCallback)
+        binding.cvGuideIndicator.setViewPager(binding.vpGuidePager)
+        binding.btnGuideComplete.doOnDebouncingClick {
             HomeActivity.start(this)
             finish()
         }
@@ -43,12 +41,12 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
     private val mCallback: OnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            if (mBinding.vpGuidePager.currentItem != adapter.itemCount - 1 || positionOffsetPixels <= 0) {
+            if (binding.vpGuidePager.currentItem != adapter.itemCount - 1 || positionOffsetPixels <= 0) {
                 return
             }
-            mBinding.cvGuideIndicator.visibility = View.VISIBLE
-            mBinding.btnGuideComplete.visibility = View.INVISIBLE
-            mBinding.btnGuideComplete.clearAnimation()
+            binding.cvGuideIndicator.visibility = View.VISIBLE
+            binding.btnGuideComplete.visibility = View.INVISIBLE
+            binding.btnGuideComplete.clearAnimation()
         }
 
         override fun onPageScrollStateChanged(state: Int) {
@@ -56,9 +54,9 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
             if (state != ViewPager2.SCROLL_STATE_IDLE) {
                 return
             }
-            val lastItem = mBinding.vpGuidePager.currentItem == adapter.itemCount - 1
-            mBinding.cvGuideIndicator.visibility = if (lastItem) View.INVISIBLE else View.VISIBLE
-            mBinding.btnGuideComplete.visibility = if (lastItem) View.VISIBLE else View.INVISIBLE
+            val lastItem = binding.vpGuidePager.currentItem == adapter.itemCount - 1
+            binding.cvGuideIndicator.visibility = if (lastItem) View.INVISIBLE else View.VISIBLE
+            binding.btnGuideComplete.visibility = if (lastItem) View.VISIBLE else View.INVISIBLE
             if (lastItem) {
                 // 按钮呼吸动效
                 val animation = ScaleAnimation(
@@ -68,7 +66,7 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
                 animation.duration = 350
                 animation.repeatMode = Animation.REVERSE
                 animation.repeatCount = Animation.INFINITE
-                mBinding.btnGuideComplete.startAnimation(animation)
+                binding.btnGuideComplete.startAnimation(animation)
             }
         }
     }
@@ -94,7 +92,7 @@ class GuideActivity : BaseViewBindingReflectActivity<ActivityGuideBinding>() {
     }
 
     override fun onDestroy() {
-        mBinding.vpGuidePager.unregisterOnPageChangeCallback(mCallback)
+        binding.vpGuidePager.unregisterOnPageChangeCallback(mCallback)
         super.onDestroy()
     }
 }

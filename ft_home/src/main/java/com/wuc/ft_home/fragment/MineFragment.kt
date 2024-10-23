@@ -24,7 +24,7 @@ class MineFragment : TitleBarFragment<FragmentMineBinding>() {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        mBinding.btnMineGuide.doOnDebouncingClick {
+        binding.btnMineGuide.doOnDebouncingClick {
             openActivity<GuideActivity>(requireContext())
         }
     }

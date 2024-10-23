@@ -11,7 +11,7 @@ import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.databinding.ActivitySplashBinding
 import com.wuc.lib_base.ext.disableBackPressed
 import com.wuc.lib_base.helper.AppHelper
-import com.wuc.lib_common.base.activity.BaseViewBindingReflectActivity
+import com.wuc.lib_common.base.activity.BaseBindingReflectActivity
 import java.util.Locale
 
 /**
@@ -19,7 +19,7 @@ import java.util.Locale
  * @date: 2024/10/21
  * @description: 闪屏界面
  */
-class SplashActivity : BaseViewBindingReflectActivity<ActivitySplashBinding>() {
+class SplashActivity : BaseBindingReflectActivity<ActivitySplashBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // 问题及方案：https://www.cnblogs.com/net168/p/5722752.html
@@ -41,14 +41,14 @@ class SplashActivity : BaseViewBindingReflectActivity<ActivitySplashBinding>() {
         // 禁用返回
         disableBackPressed(this)
         // 设置动画监听
-        mBinding.lavSplashLottie.addAnimatorListener(object : AnimatorListenerAdapter() {
+        binding.lavSplashLottie.addAnimatorListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                mBinding.lavSplashLottie.removeAnimatorListener(this)
+                binding.lavSplashLottie.removeAnimatorListener(this)
                 HomeActivity.start(this@SplashActivity)
                 finish()
             }
         })
-        mBinding.ivSplashDebug.let {
+        binding.ivSplashDebug.let {
             if (AppHelper.isDebug()) {
                 // 显示 Debug 信息
                 it.isVisible = true
