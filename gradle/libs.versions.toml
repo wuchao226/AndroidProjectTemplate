@@ -178,9 +178,6 @@ smartRefresh-header = { module = "io.github.scwang90:refresh-header-classics", v
 #气泡
 toaster = { module = "com.github.getActivity:Toaster", version.ref = "toasterVersion" }
 
-#权限 https://github.com/getActivity/XXPermissions
-xxPermissions = { module = "com.github.getActivity:XXPermissions", version.ref = "permissionVersion" }
-
 #轮播 https://github.com/youth5201314/banner
 banner = { module = "io.github.youth5201314:banner", version.ref = "bannerVersion" }
 
@@ -203,6 +200,9 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottieV
 circleindicator = { group = "me.relex", name = "circleindicator", version.ref = "circleindicatorVersion" }
 # 标题栏框架：https://github.com/getActivity/TitleBar
 titleBar = { group = "com.github.getActivity", name = "TitleBar", version.ref = "titleBarVersion" }
+
+# 权限请求框架：https://github.com/getActivity/XXPermissions
+xxPermissions = { group = "com.github.getActivity", name = "XXPermissions", version.ref = "permissionVersion" }
 
 
 #自动生成SPI暴露服务文件

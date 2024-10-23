@@ -27,6 +27,13 @@ class MineFragment : TitleBarFragment<FragmentMineBinding>() {
         binding.btnMineGuide.doOnDebouncingClick {
             openActivity<GuideActivity>(requireContext())
         }
+        binding.btnMineCrash.doOnDebouncingClick {
+            // 上报错误到 Bugly 上
+//            CrashReport.postCatchedException(IllegalStateException("are you ok?"))
+            // 关闭 Bugly 异常捕捉
+//            CrashReport.closeBugly()
+            throw IllegalStateException("are you ok?")
+        }
     }
 
     override fun isStatusBarEnabled(): Boolean {

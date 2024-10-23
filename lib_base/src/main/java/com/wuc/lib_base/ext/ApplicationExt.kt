@@ -48,12 +48,19 @@ inline val appVersionCode: Long get() = PackageInfoCompat.getLongVersionCode(pac
 // 判断 App 是否是 Debug 版本
 inline val isAppDebug: Boolean get() = application.isAppDebug
 
+// 判断当前应用是否是调试模式
 inline val Application.isAppDebug: Boolean
+    // 获取 Application 的 PackageManager 并调用 getApplicationInfo 方法获取 ApplicationInfo
+    // 使用 packageName 作为参数，0 表示不需要额外的信息
     get() = packageManager.getApplicationInfo(packageName, 0).flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
+    // ApplicationInfo.FLAG_DEBUGGABLE 是一个标志位，用于指示应用是否可调试
+    // 使用 and 运算符来检查 flags 是否包含 FLAG_DEBUGGABLE 标志
+    // 如果包含，则返回 true，表示应用是调试版本；否则返回 false，表示应用不是调试版本
 
 // 判断 App 是否是夜间模式
 inline val isAppDarkMode: Boolean
     get() = (application.resources.configuration.uiMode and UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+
 
 // 启动 App 详情设置
 fun launchAppSettings(): Boolean =

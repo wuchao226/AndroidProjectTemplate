@@ -5,10 +5,11 @@ import android.content.Context
 import com.google.auto.service.AutoService
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
-import com.wuc.lib_base.BaseApplication
 import com.wuc.lib_base.app.ApplicationLifecycle
 import com.wuc.lib_base.ext.application
+import com.wuc.lib_base.ext.isAppDebug
 import com.wuc.lib_base.log.LogConfig
+import com.wuc.lib_base.log.LogConfig.JsonParser
 import com.wuc.lib_base.log.LogManager
 import com.wuc.lib_base.log.printer.ConsolePrinter
 import com.wuc.lib_base.utils.ProcessUtils
@@ -90,7 +91,7 @@ class CommonApplication : ApplicationLifecycle {
 
                 override fun includeThread(): Boolean = true
 
-                override fun enable(): Boolean = true
+                override fun enable(): Boolean = isAppDebug
 
                 override fun stackTraceDepth(): Int = 5
             },

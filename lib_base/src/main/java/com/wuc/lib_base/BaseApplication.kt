@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import com.wuc.lib_base.app.LoadModuleProxy
+import com.wuc.lib_base.ext.application
 import com.wuc.lib_base.helper.AppHelper
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
 import com.wuc.lib_base.network_intercept.NetWorkUtil
@@ -38,6 +39,7 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        application = this
         //获取到全局的网络状态
         networkType = NetWorkUtil.getNetworkType(this@BaseApplication.applicationContext)
         //网络监听

@@ -7,7 +7,7 @@ import com.tencent.mmkv.MMKV
 /**
  * @author: wuc
  * @date: 2024/10/9
- * @desc: MMKV 封装 默认的保存地址是： /data/user/0/应用包名/files/mmkv
+ * @desc: MMKV 工具类封装 默认的保存地址是： /data/user/0/应用包名/files/mmkv
  * 使用示例:
  * // 获取
  * MMKVUtil.get(MyConstant.TOKEN, "")// 第二个参数为默认值

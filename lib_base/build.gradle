@@ -13,7 +13,6 @@ dependencies {
     implementation(libs.bundles.glideBundles)
     kapt(libs.glide.compiler)
     implementation(libs.toaster)
-    implementation(libs.xxPermissions)
     implementation(libs.bundles.navigationBundles)
 
     //其他
@@ -25,4 +24,5 @@ dependencies {
     api(libs.brvah)
     api(libs.lottie)
     api(libs.titleBar)
+    api(libs.xxPermissions)
 }

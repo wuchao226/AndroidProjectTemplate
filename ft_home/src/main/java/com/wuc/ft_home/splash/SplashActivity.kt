@@ -10,6 +10,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.databinding.ActivitySplashBinding
 import com.wuc.lib_base.ext.disableBackPressed
+import com.wuc.lib_base.ext.isAppDebug
 import com.wuc.lib_base.helper.AppHelper
 import com.wuc.lib_common.base.activity.BaseBindingReflectActivity
 import java.util.Locale
@@ -49,7 +50,7 @@ class SplashActivity : BaseBindingReflectActivity<ActivitySplashBinding>() {
             }
         })
         binding.ivSplashDebug.let {
-            if (AppHelper.isDebug()) {
+            if (isAppDebug) {
                 // 显示 Debug 信息
                 it.isVisible = true
                 it.setText(AppHelper.getBuildType().uppercase(Locale.getDefault()))
