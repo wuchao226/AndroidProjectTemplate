@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
 import com.wuc.lib_common.R
+import com.wuc.lib_common.action.BundleAction
 import com.wuc.lib_common.loading.LoadingUtils
 
 /**
@@ -13,7 +14,7 @@ import com.wuc.lib_common.loading.LoadingUtils
  * @date: 2024/9/9
  * @desc:最底层的Activity,不带MVP和MVVM,一般不用这个
  */
-abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkConnectionChangedListener {
+abstract class AbsActivity : AppCompatActivity(), BundleAction, NetWorkMonitorManager.NetworkConnectionChangedListener {
     private val TAG: String
         get() = this::class.java.simpleName
 
@@ -61,6 +62,7 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
     open fun initData() {
 
     }
+
     /**
      * 初始化沉浸式状态栏
      */
@@ -76,6 +78,7 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
     protected open fun isStatusBarEnabled(): Boolean {
         return true
     }
+
     /**
      * 状态栏字体深色模式
      */
@@ -86,23 +89,28 @@ abstract class AbsActivity : AppCompatActivity(), NetWorkMonitorManager.NetworkC
     /**
      * 获取状态栏沉浸的配置对象
      */
-    open fun getStatusBarConfig():ImmersionBar {
+    open fun getStatusBarConfig(): ImmersionBar {
         if (immersionBar == null) {
             immersionBar = createStatusBarConfig()
         }
         return immersionBar!!
     }
+
     /**
      * 初始化沉浸式状态栏
      */
-   protected open fun createStatusBarConfig(): ImmersionBar {
+    protected open fun createStatusBarConfig(): ImmersionBar {
         return ImmersionBar.with(this)
             // 默认状态栏字体颜色为黑色
-           .statusBarDarkFont(isStatusBarDarkFont())
+            .statusBarDarkFont(isStatusBarDarkFont())
             // 指定导航栏背景颜色
-           .navigationBarColor(R.color.white)
+            .navigationBarColor(R.color.white)
             // 状态栏字体和导航栏内容自动变色，必须指定状态栏颜色和导航栏颜色才可以自动变色
-           .autoDarkModeEnable(true, 0.2f)
+            .autoDarkModeEnable(true, 0.2f)
+    }
+
+    override fun getBundle(): Bundle? {
+        return intent.extras
     }
 
     /**

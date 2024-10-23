@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.wuc.lib_base.network_intercept.NetWorkMonitorManager
+import com.wuc.lib_common.action.BundleAction
 import com.wuc.lib_common.base.activity.AbsActivity
 
 /**
@@ -16,7 +17,7 @@ import com.wuc.lib_common.base.activity.AbsActivity
  * @date: 2024/9/12
  * @desc: Fragment 基类
  */
-abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnectionChangedListener {
+abstract class AbsFragment : Fragment(), BundleAction, NetWorkMonitorManager.NetworkConnectionChangedListener {
 
     protected var TAG: String? = this::class.java.simpleName
 
@@ -124,6 +125,10 @@ abstract class AbsFragment : Fragment(), NetWorkMonitorManager.NetworkConnection
      */
     open fun isLoading(): Boolean {
         return loading
+    }
+
+    override fun getBundle(): Bundle? {
+        return arguments
     }
 
     /**
