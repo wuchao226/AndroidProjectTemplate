@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hjq.permissions.XXPermissions
 import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
+import com.wuc.lib_base.ext.launchAppSettings
 import com.wuc.lib_common.base.fragment.BaseBindingFragment
 import com.wuc.lib_common.base.fragment.TitleBarFragment
 
@@ -35,6 +37,11 @@ class MessageFragment : TitleBarFragment<FragmentMessageBinding>() {
         }
         binding.btnMineTab.setOnClickListener {
             HomeActivity.start(requireContext(), MINE_INDEX)
+        }
+        binding.btnMessageSetting.setOnClickListener {
+            // 跳转到应用详情页
+            launchAppSettings()
+//            XXPermissions.startPermissionActivity(requireContext())
         }
     }
 }
