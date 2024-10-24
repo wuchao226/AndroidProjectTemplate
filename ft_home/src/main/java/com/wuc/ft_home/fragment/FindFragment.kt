@@ -6,26 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import com.wuc.ft_home.databinding.FragmentFindBinding
 import com.wuc.lib_common.base.fragment.BaseBindingFragment
+import com.wuc.lib_common.base.fragment.TitleBarFragment
 
 /**
  * @author: wuc
  * @date: 2024/10/18
  * @description:
  */
-class FindFragment : BaseBindingFragment<FragmentFindBinding>() {
-    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): FragmentFindBinding {
-        return FragmentFindBinding.inflate(inflater, container, false)
+class FindFragment : TitleBarFragment<FragmentFindBinding>() {
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = FindFragment().apply {}
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            FindFragment().apply {
-
-            }
+    override fun isStatusBarEnabled(): Boolean {
+        // 使用沉浸式状态栏
+        return !super.isStatusBarEnabled()
     }
+
 }
