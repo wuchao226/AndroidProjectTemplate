@@ -284,6 +284,63 @@
                 app:shape_shadowColor="@color/black10"
                 app:shape_shadowSize="10dp"
                 app:shape_solidColor="@color/white" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_20"
+                android:hint="这里只能输入手机号（只能以 1 开头）"
+                app:regexType="mobile" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入中文（普通的中文字符）"
+                app:regexType="chinese" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入英文（大写和小写的英文）"
+                app:regexType="english" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入数字（只允许输入纯数字）"
+                app:regexType="number" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入数量（非 0 开头的数字）"
+                app:regexType="count" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入用户名（中文、英文、数字）"
+                app:regexType="name" />
+
+            <com.wuc.lib_common.widget.view.RegexEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:hint="这里只能输入非空格的字符"
+                app:regexType="nonnull" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
