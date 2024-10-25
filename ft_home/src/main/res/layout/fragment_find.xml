@@ -285,6 +285,15 @@
                 app:shape_shadowSize="10dp"
                 app:shape_solidColor="@color/white" />
 
+            <com.wuc.lib_common.widget.view.ClearEditText
+                style="@style/EditTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dp_40"
+                android:layout_marginTop="@dimen/dp_10"
+                android:hint="带清除的按钮的EditText"
+                android:text="这是一个带清除的按钮的EditText" />
+
             <com.wuc.lib_common.widget.view.RegexEditText
                 style="@style/EditTextStyle"
                 android:layout_width="match_parent"
