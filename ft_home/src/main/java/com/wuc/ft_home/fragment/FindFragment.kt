@@ -2,11 +2,14 @@ package com.wuc.ft_home.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RatingBar
+import android.widget.RatingBar.OnRatingBarChangeListener
 import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.FragmentFindBinding
 import com.wuc.lib_base.ext.doOnDebouncingClick
 import com.wuc.lib_base.ext.toast
 import com.wuc.lib_common.base.fragment.TitleBarFragment
+import com.wuc.lib_common.widget.view.SimpleRatingBar
 import com.wuc.lib_common.widget.view.SwitchButton
 import com.wuc.lib_glide.setUrlCircle
 import com.wuc.lib_glide.setUrlRound
@@ -44,6 +47,11 @@ class FindFragment : TitleBarFragment<FragmentFindBinding>() {
             toast(R.string.common_code_send_hint)
             binding.cvFindCountdown.start()
         }
+        binding.ratingBar.setOnRatingBarChangeListener(object : SimpleRatingBar.OnRatingChangeListener{
+            override fun onRatingChanged(ratingBar: SimpleRatingBar, grade: Float, touch: Boolean) {
+                toast("$grade  $touch")
+            }
+        })
     }
 
 }

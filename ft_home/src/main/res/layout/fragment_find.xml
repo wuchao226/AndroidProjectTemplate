@@ -207,6 +207,22 @@
                     android:enabled="false" />
 
             </LinearLayout>
+            <com.wuc.lib_common.widget.view.SimpleRatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                app:grade="2.5"
+                app:gradeStep="half" />
+
+            <com.wuc.lib_common.widget.view.SimpleRatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                app:grade="3"
+                app:gradeStep="one" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
