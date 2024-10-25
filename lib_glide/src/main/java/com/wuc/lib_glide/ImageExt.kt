@@ -1,20 +1,23 @@
 package com.wuc.lib_glide
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.wuc.lib_glide.transformation.BlurTransformation
-import com.sum.glide.transformation.CircleBorderTransform
 import com.wuc.lib_base.ext.screenWidth
+import com.wuc.lib_glide.transformation.BlurTransformation
+import com.wuc.lib_glide.transformation.CircleBorderTransform
 import java.io.File
 
 /**
@@ -82,18 +85,60 @@ fun ImageView.setUrlCircle(url: String?) {
 }
 
 /**
+ * 加载圆形图片
+ * @param drawableId
+ */
+fun ImageView.setUrlCircle(@DrawableRes drawableId: Int,) {
+    //请求配置
+    val options = RequestOptions.circleCropTransform()
+    Glide.with(context).load(drawableId)
+        .placeholder(R.mipmap.default_head)
+        .error(R.mipmap.default_head)
+        .skipMemoryCache(false) //启用内存缓存
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//        .apply(options)// 圆形
+        .transform(MultiTransformation(CenterCrop(), CircleCrop())) // 圆形
+        .into(this)
+}
+
+/**
  * 加载边框圆形图片
  * @param url
  * @param borderWidth 边框宽度
  * @param borderColor 边框颜色
  */
-fun ImageView.setUrlCircleBorder(url: String?, borderWidth: Float, borderColor: Int) {
+fun ImageView.setUrlCircleBorder(
+    url: String?,
+    borderWidth: Float = 0F,
+    borderColor: Int = Color.parseColor("#00000000")
+) {
     Glide.with(context).load(url)
         .placeholder(R.mipmap.default_head)
         .error(R.mipmap.default_head)
         .skipMemoryCache(false) //启用内存缓存
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
         .transform(CircleBorderTransform(borderWidth, borderColor)) // 圆形
+        .into(this)
+}
+
+/**
+ * 加载边框圆形图片
+ * @param drawableId
+ * @param borderWidth 边框宽度
+ * @param borderColor 边框颜色
+ */
+fun ImageView.setUrlCircleBorder(
+    @DrawableRes drawableId: Int,
+    borderWidth: Float = 0F,
+    borderColor: Int = Color.parseColor("#00000000")
+) {
+    Glide.with(context).load(drawableId)
+        .placeholder(R.mipmap.default_head)
+        .error(R.mipmap.default_head)
+        .skipMemoryCache(false) //启用内存缓存
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .transform(CircleBorderTransform(borderWidth, borderColor)) // 圆形
+        //.transform(MultiTransformation(CenterCrop(), CircleCrop())) // 圆形
         .into(this)
 }
 
@@ -112,7 +157,17 @@ fun ImageView.setUrlRound(url: String?, radius: Int = 10) {
         .error(R.mipmap.default_img)
         .skipMemoryCache(false) // 启用内存缓存
         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-        .transform(CenterCrop(), RoundedCorners(radius))
+        .transform(MultiTransformation(CenterCrop(), RoundedCorners(radius)))
+        .into(this)
+}
+
+fun ImageView.setUrlRound(@DrawableRes drawableId: Int, radius: Int = 10) {
+    Glide.with(context).load(drawableId)
+        .placeholder(R.mipmap.default_img)
+        .error(R.mipmap.default_img)
+        .skipMemoryCache(false) // 启用内存缓存
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .transform(MultiTransformation(CenterCrop(), RoundedCorners(radius)))
         .into(this)
 }
 
