@@ -10,9 +10,6 @@ dependencies {
     api(libs.bundles.okhttpBundles)
     implementation(libs.bundles.dataStoreBundles)
     implementation(libs.bundles.imageSelectorBundles)
-    implementation(libs.bundles.glideBundles)
-    kapt(libs.glide.compiler)
-    implementation(libs.toaster)
     implementation(libs.bundles.navigationBundles)
 
     //其他
@@ -25,4 +22,6 @@ dependencies {
     api(libs.lottie)
     api(libs.titleBar)
     api(libs.xxPermissions)
+    api(libs.bundles.shapeBundles)
+    api(libs.toaster)
 }

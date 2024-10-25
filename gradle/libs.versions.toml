@@ -62,6 +62,8 @@ immersionbarVersion = "3.2.2"
 lottieVersion = "6.5.2"
 circleindicatorVersion = "2.1.6"
 titleBarVersion = "10.5"
+shapeViewVersion = "9.2"
+shapeDrawableVersion = "3.2"
 
 # 定义项目依赖的库
 # 用途: 在这个部分，您可以具体列出项目需要的库及其坐标（group，name，[version]）。
@@ -175,7 +177,7 @@ xpopup-picker = { module = "com.github.li-xiaojun:XPopupExt", version.ref = "pic
 smartRefresh-core = { module = "io.github.scwang90:refresh-layout-kernel", version.ref = "smartRefreshVersion" }
 smartRefresh-header = { module = "io.github.scwang90:refresh-header-classics", version.ref = "smartRefreshVersion" }
 
-#气泡
+#吐司框架：https://github.com/getActivity/Toaster
 toaster = { module = "com.github.getActivity:Toaster", version.ref = "toasterVersion" }
 
 #轮播 https://github.com/youth5201314/banner
@@ -203,6 +205,11 @@ titleBar = { group = "com.github.getActivity", name = "TitleBar", version.ref = 
 
 # 权限请求框架：https://github.com/getActivity/XXPermissions
 xxPermissions = { group = "com.github.getActivity", name = "XXPermissions", version.ref = "permissionVersion" }
+
+# Shape 框架：https://github.com/getActivity/ShapeView
+shapeView = { group = "com.github.getActivity", name = "ShapeView", version.ref = "shapeViewVersion" }
+# ShapeDrawable 框架：https://github.com/getActivity/ShapeDrawable
+shapeDrawable = { group = "com.github.getActivity", name = "ShapeDrawable", version.ref = "shapeDrawableVersion" }
 
 
 #自动生成SPI暴露服务文件
@@ -233,6 +240,7 @@ refreshBundles = ["smartRefresh-core", "smartRefresh-header"]
 xpopupBundles = ["xpopup-core", "xpopup-picker"]
 roomBundles = ["room-runtime", "roomktx"]
 immersionbarBundles = ["immersionbar", "immersionbarKtx"]
+shapeBundles = ["shapeView", "shapeDrawable"]
 
 # 定义Gradle插件的依赖
 # 用途: 在这个部分，您可以列出项目中使用的Gradle插件及其版本。同样，您可以利用 [versions] 中定义的版本号来统一管理插件版本。

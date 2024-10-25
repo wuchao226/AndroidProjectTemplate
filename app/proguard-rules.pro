@@ -273,12 +273,16 @@
 #XXPermission混淆
 -keep class com.hjq.permissions.** {*;}
 -keep class com.hjq.toast.** {*;}
+# Gson 解析容错框架
+-keep class com.hjq.gson.factory.** {*;}
+# shape 框架
+-keep class com.hjq.shape.** {*;}
+# Toast 框架
+-keep class com.hjq.toast.** {*;}
 
 ##腾讯
 -keep class com.tencent.** { *; }
 
-# Gson 解析容错框架
--keep class com.hjq.gson.factory.** {*;}
 
 # 图片选择处理 PictureSelector
 -keep class com.luck.picture.lib.** { *; }

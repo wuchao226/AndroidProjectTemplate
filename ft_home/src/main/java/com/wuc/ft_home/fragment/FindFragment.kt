@@ -38,7 +38,7 @@ class FindFragment : TitleBarFragment<FragmentFindBinding>() {
         binding.ivFindCorner.setUrlRound(R.drawable.update_app_top_bg)
         binding.sbFindSwitch.setOnCheckedChangeListener(object : SwitchButton.OnCheckedChangeListener{
             override fun onCheckedChanged(button: SwitchButton, checked: Boolean) {
-                toast("$checked")
+                toast(checked)
             }
         })
 

@@ -2,12 +2,15 @@ package com.wuc.lib_common
 
 import android.app.Application
 import android.content.Context
+import android.view.Gravity
 import com.google.auto.service.AutoService
 import com.google.gson.Gson
+import com.hjq.toast.Toaster
 import com.tencent.mmkv.MMKV
 import com.wuc.lib_base.app.ApplicationLifecycle
 import com.wuc.lib_base.ext.application
 import com.wuc.lib_base.ext.isAppDebug
+import com.wuc.lib_base.helper.ToastLogInterceptor
 import com.wuc.lib_base.log.LogConfig
 import com.wuc.lib_base.log.LogConfig.JsonParser
 import com.wuc.lib_base.log.LogManager
@@ -47,12 +50,13 @@ class CommonApplication : ApplicationLifecycle {
      */
     override fun initByFrontDesk(): MutableList<() -> String> {
         val list = mutableListOf<() -> String>()
+        list.add { initLog() }
         // 以下只需要在主进程当中初始化 按需要调整
         if (ProcessUtils.isMainProcess(application)) {
             list.add { initMMKV() }
             list.add { initTheRouter() }
+            list.add { initToaster() }
         }
-        list.add { initLog() }
         return list
     }
 
@@ -75,8 +79,17 @@ class CommonApplication : ApplicationLifecycle {
      * 阿里路由 ARouter 初始化
      */
     private fun initTheRouter(): String {
-
         return "TheRouter -->> init complete"
+    }
+    /**
+     * Toast 框架 初始化
+     */
+    private fun initToaster(): String {
+        // 初始化 Toast 框架
+        Toaster.init(application)
+        // 自定义 Toast 拦截器
+        Toaster.setInterceptor(ToastLogInterceptor())
+        return "Toaster -->> init complete"
     }
 
     /**
@@ -93,7 +106,7 @@ class CommonApplication : ApplicationLifecycle {
 
                 override fun enable(): Boolean = isAppDebug
 
-                override fun stackTraceDepth(): Int = 5
+                override fun stackTraceDepth(): Int = 7
             },
             ConsolePrinter()
         )
