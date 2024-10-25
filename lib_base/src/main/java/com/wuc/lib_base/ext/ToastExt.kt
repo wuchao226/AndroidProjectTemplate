@@ -10,35 +10,102 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.hjq.toast.Toaster
+import com.luck.picture.lib.utils.ToastUtils
 
 /**
  * @author: wuc
  * @date: 2024/10/9
  * @desc:
  */
-fun Fragment.toast(message: CharSequence?): Toast =
-    requireActivity().toast(message)
+//fun Fragment.toast(message: CharSequence?): Toast =
+//    requireActivity().toast(message)
+//
+//fun Fragment.toast(@StringRes message: Int): Toast =
+//    requireActivity().toast(message)
+//
+//fun Context.toast(message: CharSequence?): Toast =
+//    Toast.makeText(this, message, Toast.LENGTH_SHORT).fixBadTokenException().apply { show() }
+//
+//fun Context.toast(@StringRes message: Int): Toast =
+//    Toast.makeText(this, message, Toast.LENGTH_SHORT).fixBadTokenException().apply { show() }
+//
+//fun Fragment.longToast(message: CharSequence?): Toast =
+//    requireActivity().longToast(message)
+//
+//fun Fragment.longToast(@StringRes message: Int): Toast =
+//    requireActivity().longToast(message)
 
-fun Fragment.toast(@StringRes message: Int): Toast =
-    requireActivity().toast(message)
+//fun Context.longToast(message: CharSequence?): Toast =
+//    Toast.makeText(this, message, Toast.LENGTH_LONG).fixBadTokenException().apply { show() }
+//
+//fun Context.longToast(@StringRes message: Int): Toast =
+//    Toast.makeText(this, message, Toast.LENGTH_LONG).fixBadTokenException().apply { show() }
 
-fun Context.toast(message: CharSequence?): Toast =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).fixBadTokenException().apply { show() }
+// 显示 Toast
+fun toast(text: CharSequence?) {
+    Toaster.show(text)
+}
 
-fun Context.toast(@StringRes message: Int): Toast =
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).fixBadTokenException().apply { show() }
+fun toast(@StringRes id: Int) {
+    Toaster.show(id)
+}
 
-fun Fragment.longToast(message: CharSequence?): Toast =
-    requireActivity().longToast(message)
+fun toast(`object`: Any?) {
+    Toaster.show(`object`)
+}
 
-fun Fragment.longToast(@StringRes message: Int): Toast =
-    requireActivity().longToast(message)
+// 显示短 Toast
+fun toastShort(text: CharSequence?) {
+    Toaster.showShort(text)
+}
 
-fun Context.longToast(message: CharSequence?): Toast =
-    Toast.makeText(this, message, Toast.LENGTH_LONG).fixBadTokenException().apply { show() }
+fun toastShort(@StringRes id: Int) {
+    Toaster.showShort(id)
+}
 
-fun Context.longToast(@StringRes message: Int): Toast =
-    Toast.makeText(this, message, Toast.LENGTH_LONG).fixBadTokenException().apply { show() }
+fun toastShort(`object`: Any?) {
+    Toaster.showShort(`object`)
+}
+
+// 显示长 Toast
+fun toastLong(text: CharSequence?) {
+    Toaster.showLong(text)
+}
+
+fun toastLong(@StringRes id: Int) {
+    Toaster.showLong(id)
+}
+
+fun toastLong(`object`: Any?) {
+    Toaster.showLong(`object`)
+}
+
+// 延迟显示 Toast
+fun toastDelayed(text: CharSequence?, delayMillis: Long) {
+    Toaster.delayedShow(text, delayMillis)
+}
+
+fun toastDelayed(@StringRes id: Int, delayMillis: Long) {
+    Toaster.delayedShow(id, delayMillis)
+}
+
+fun toastDelayed(`object`: Any?, delayMillis: Long) {
+    Toaster.delayedShow(`object`, delayMillis)
+}
+
+// debug 模式下显示 Toast
+fun toastDebug(text: CharSequence?) {
+    Toaster.debugShow(text)
+}
+
+fun toastDebug(@StringRes id: Int) {
+    Toaster.debugShow(id)
+}
+
+fun toastDebug(`object`: Any?, delayMillis: Long) {
+    Toaster.debugShow(`object`)
+}
 
 /**
  * 修复 7.1 的 BadTokenException
