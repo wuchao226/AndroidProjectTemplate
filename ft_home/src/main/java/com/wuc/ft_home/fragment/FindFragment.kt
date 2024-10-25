@@ -1,17 +1,14 @@
 package com.wuc.ft_home.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.FragmentFindBinding
+import com.wuc.lib_base.ext.doOnDebouncingClick
 import com.wuc.lib_base.ext.toast
-import com.wuc.lib_common.base.fragment.BaseBindingFragment
 import com.wuc.lib_common.base.fragment.TitleBarFragment
 import com.wuc.lib_common.widget.view.SwitchButton
 import com.wuc.lib_glide.setUrlCircle
-import com.wuc.lib_glide.setUrlCircleBorder
 import com.wuc.lib_glide.setUrlRound
 
 /**
@@ -41,6 +38,12 @@ class FindFragment : TitleBarFragment<FragmentFindBinding>() {
                 toast("$checked")
             }
         })
+
+        binding.cvFindCountdown.doOnDebouncingClick {
+            // 倒计时示例
+            toast(R.string.common_code_send_hint)
+            binding.cvFindCountdown.start()
+        }
     }
 
 }
