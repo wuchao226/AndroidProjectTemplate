@@ -20,6 +20,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dp_10"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -223,6 +224,18 @@
                 android:layout_marginTop="@dimen/dp_20"
                 app:grade="3"
                 app:gradeStep="one" />
+
+            <com.wuc.lib_common.widget.view.DrawableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_20"
+                android:drawableStart="@drawable/avatar_placeholder_ic"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:text="支持限定 Drawable 大小的 TextView"
+                app:drawableHeight="@dimen/dp_20"
+                app:drawableWidth="@dimen/dp_20" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
