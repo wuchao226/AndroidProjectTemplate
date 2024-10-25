@@ -360,6 +360,22 @@
                 android:layout_marginHorizontal="@dimen/dp_40"
                 android:hint="这里只能输入非空格的字符"
                 app:regexType="nonnull" />
+
+            <com.wuc.lib_common.widget.layout.RatioFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/common_accent_color"
+                app:sizeRatio="2:1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="这是一个宽高比 2:1 的FrameLayout"
+                    android:textColor="@color/white" />
+
+            </com.wuc.lib_common.widget.layout.RatioFrameLayout>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>
