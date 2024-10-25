@@ -77,4 +77,14 @@
         <item name="android:paddingBottom">@dimen/dp_5</item>
         <item name="android:background">@drawable/button_rect_selector</item>
     </style>
+
+    <!-- 圆角按钮样式 -->
+    <style name="RoundButtonStyle" parent="ButtonStyle">
+        <item name="android:paddingStart">@dimen/dp_10</item>
+        <item name="android:paddingEnd">@dimen/dp_10</item>
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:background">@drawable/button_round_selector</item>
+    </style>
+
 </resources>

@@ -40,4 +40,12 @@
         <attr name="bar_lineSize" format="dimension" />
         <attr name="bar_lineMargin" format="dimension" />
     </declare-styleable>
+
+    <!-- 仿 ios 开关按钮 -->
+    <declare-styleable name="SwitchButton">
+        <!-- 是否选中 -->
+        <attr name="android:checked" />
+        <!-- 是否禁用 -->
+        <attr name="android:enabled" />
+    </declare-styleable>
 </resources>
