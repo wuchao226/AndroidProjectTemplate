@@ -14,4 +14,6 @@
     <string name="common_code_send">发送验证码</string>
     <string name="common_code_send_hint">验证码已发送，请注意查收</string>
     <string name="common_code_error_hint">验证码错误，请检查输入</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
