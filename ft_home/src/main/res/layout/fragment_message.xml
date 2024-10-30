@@ -23,37 +23,6 @@
             android:layout_marginHorizontal="@dimen/dp_30"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_home_tab"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="切换到首页 Tab" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_find_tab"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="切换到发现页 Tab" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_mine_tab"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="切换到我的页 Tab" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_message_setting"
-                style="@style/ButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_30"
-                android:text="跳转到应用详情页" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -29,19 +29,6 @@ class MessageFragment : TitleBarFragment<FragmentMessageBinding>() {
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        binding.btnHomeTab.setOnClickListener {
-            HomeActivity.start(requireContext(), HOME_INDEX)
-        }
-        binding.btnFindTab.setOnClickListener {
-            HomeActivity.start(requireContext(), FIND_INDEX)
-        }
-        binding.btnMineTab.setOnClickListener {
-            HomeActivity.start(requireContext(), MINE_INDEX)
-        }
-        binding.btnMessageSetting.setOnClickListener {
-            // 跳转到应用详情页
-            launchAppSettings()
-//            XXPermissions.startPermissionActivity(requireContext())
-        }
+
     }
 }

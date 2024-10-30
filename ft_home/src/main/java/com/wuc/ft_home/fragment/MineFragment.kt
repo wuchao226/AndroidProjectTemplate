@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.wuc.ft_home.HomeActivity
 import com.wuc.ft_home.activity.GuideActivity
 import com.wuc.ft_home.databinding.FragmentMineBinding
 import com.wuc.lib_base.ext.doOnDebouncingClick
+import com.wuc.lib_base.ext.launchAppSettings
 import com.wuc.lib_base.ext.openActivity
 import com.wuc.lib_common.base.fragment.BaseBindingFragment
 import com.wuc.lib_common.base.fragment.TitleBarFragment
@@ -33,6 +35,18 @@ class MineFragment : TitleBarFragment<FragmentMineBinding>() {
             // 关闭 Bugly 异常捕捉
 //            CrashReport.closeBugly()
             throw IllegalStateException("are you ok?")
+        }
+        binding.btnHomeTab.setOnClickListener {
+            HomeActivity.start(requireContext(), HOME_INDEX)
+        }
+        binding.btnFindTab.setOnClickListener {
+            HomeActivity.start(requireContext(), FIND_INDEX)
+        }
+
+        binding.btnMessageSetting.setOnClickListener {
+            // 跳转到应用详情页
+            launchAppSettings()
+//            XXPermissions.startPermissionActivity(requireContext())
         }
     }
 
