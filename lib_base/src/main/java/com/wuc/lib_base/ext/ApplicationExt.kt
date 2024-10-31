@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.pm.PackageInfoCompat
+import androidx.fragment.app.Fragment
 
 /**
  * @author: wuc
@@ -58,8 +59,11 @@ inline val Application.isAppDebug: Boolean
     // 如果包含，则返回 true，表示应用是调试版本；否则返回 false，表示应用不是调试版本
 
 // 判断 App 是否是夜间模式
-inline val isAppDarkMode: Boolean
-    get() = (application.resources.configuration.uiMode and UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+inline val Fragment.isAppDarkMode: Boolean
+    get() = (resources.configuration.uiMode and UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
+
+inline val Activity.isAppDarkMode: Boolean
+    get() = (resources.configuration.uiMode and UI_MODE_NIGHT_MASK) == UI_MODE_NIGHT_YES
 
 
 // 启动 App 详情设置

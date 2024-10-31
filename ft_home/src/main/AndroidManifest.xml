@@ -7,24 +7,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+        <activity
+            android:name=".activity.MaterialButtonActivity"
+            android:exported="false" />
         <!-- 重启应用（必须在独立进程） -->
         <activity
             android:name=".activity.RestartActivity"
             android:exported="false"
-            android:process=":restart" />
-        <!-- 崩溃展示（必须在独立进程） -->
+            android:process=":restart" /> <!-- 崩溃展示（必须在独立进程） -->
         <activity
             android:name=".activity.CrashActivity"
             android:exported="false"
             android:launchMode="singleTop"
             android:process=":crash"
-            android:screenOrientation="landscape" />
-        <!-- 引导页 -->
+            android:screenOrientation="landscape" /> <!-- 引导页 -->
         <activity
             android:name=".activity.GuideActivity"
             android:exported="false"
-            android:launchMode="singleTop" />
-        <!-- 首页 -->
+            android:launchMode="singleTop" /> <!-- 首页 -->
         <activity
             android:name=".HomeActivity"
             android:exported="false"

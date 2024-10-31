@@ -7,6 +7,26 @@
 
     <style name="Theme.AndroidProjectTemplate" parent="Base.Theme.AndroidProjectTemplate" />
 
+    <!--修改字体和图标的颜色 Widget.Material3.Toolbar-->
+    <style name="ToolBarTheme">
+        <item name="titleTextColor">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="textAllCaps">false</item>
+        <item name="actionOverflowMenuStyle">@style/PopupMenu.Overflow</item>
+    </style>
+
+    <!--自定义右上角的图标-->
+    <style name="ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/menu_more</item>
+    </style>
+
+    <!--修改toolbar弹出框的位置-->
+    <style name="PopupMenu.Overflow" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+        <!--false表示弹出框位置位于toolbar下面-->
+        <item name="overlapAnchor">false</item>
+    </style>
+
     <!-- 验证码按钮样式 -->
     <style name="CountdownViewStyle">
         <item name="android:layout_width">wrap_content</item>

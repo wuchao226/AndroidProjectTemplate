@@ -9,6 +9,10 @@ dependencies {
     // 指示器框架
     implementation libs.circleindicator
     implementation project(path: ':lib_glide')
+    implementation libs.appcompat
+    implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintLayout
 
     //依赖到对应组件的Api模块
 //    api(project(":cpt_profile_api"))
