@@ -18,13 +18,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
-<!--MaterialButton可以设置几种Style。
-默认样式style="@style/Widget.MaterialComponents.Button"：有填充色、有阴影
-style="@style/Widget.MaterialComponents.Button.UnelevatedButton"：有填充色、没有阴影
-style="@style/Widget.MaterialComponents.Button.OutlinedButton"：透明背景、彩色文字、有轮廓，没有阴影
-style="@style/Widget.MaterialComponents.Button.TextButton"：透明背景、彩色文字、没有轮廓，没有阴影
-style="@style/Widget.MaterialComponents.Button.Icon"：有填充色、有阴影、使用图标
--->
+        <!-- https://juejin.cn/post/6965442836787855390
+        MaterialButton可以设置几种Style。
+        默认样式style="@style/Widget.MaterialComponents.Button"：有填充色、有阴影
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"：有填充色、没有阴影
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"：透明背景、彩色文字、有轮廓，没有阴影
+        style="@style/Widget.MaterialComponents.Button.TextButton"：透明背景、彩色文字、没有轮廓，没有阴影
+        style="@style/Widget.MaterialComponents.Button.Icon"：有填充色、有阴影、使用图标
+        -->
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
@@ -35,6 +36,15 @@ style="@style/Widget.MaterialComponents.Button.Icon"：有填充色、有阴影�
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/message_title"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:shapeAppearanceOverlay="@style/DoubleFilletButtonStyle"
             android:text="@string/message_title"
             android:textAllCaps="false" />
 

@@ -44,4 +44,12 @@
         <item name="android:textColor">@drawable/countdown_color_selector</item>
         <item name="android:textSize">@dimen/sp_12</item>
     </style>
+
+    <!--双圆角按钮样式-->
+    <style name="DoubleFilletButtonStyle">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">25dp</item>
+        <item name="cornerSizeBottomRight">25dp</item>
+    </style>
 </resources>
