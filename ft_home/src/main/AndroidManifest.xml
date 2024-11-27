@@ -30,6 +30,7 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.TabLayoutActivity"/>
     </application>
 
 </manifest>

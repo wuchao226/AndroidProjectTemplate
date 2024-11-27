@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.R
 import com.wuc.ft_home.activity.MaterialButtonActivity
+import com.wuc.ft_home.activity.TabLayoutActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
 import com.wuc.ft_home.databinding.MessageItemBinding
 import com.wuc.ft_home.toolbar.ToolbarFragment
@@ -62,28 +63,24 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
         initFloatingButtonImage()
 
         mMessageAdapter.onItemClickListener = { view, position ->
-            when (position) {
-//                0 -> openActivity(SwipeRefreshLayoutActivity::class.java)
-//                1 -> openActivity(FloatingActionButtonActivity::class.java)
-//                2 -> openActivity(SnackbarActivity::class.java)
-//                3 -> openActivity(TabLayoutActivity::class.java)
-//                4 -> openActivity(TabLayoutCustomViewActivity::class.java)
-//                5 -> openActivity(CardViewActivity::class.java)
-//                6 -> openActivity(BottomNavigationActivity::class.java)
-//                7 -> openActivity(CollapsingToolbarActivity::class.java)
-//                8 -> openActivity(TextInputLayoutActivity::class.java)
-//                9 -> openActivity(SearchViewActivity::class.java)
-//                10 -> openActivity(DrawerLayoutActivity::class.java)
-//                11 -> openActivity(BottomSheetActivity::class.java)
-                12 -> openActivity<MaterialButtonActivity>(requireActivity())
-//                13 -> openActivity(ShapeableImageViewActivity::class.java)
-//                14 -> openActivity(BadgeDrawableActivity::class.java)
-//                15 -> openActivity(DragRecyclerViewActivity::class.java)
-//                16 -> openActivity(NotificationActivity::class.java)
-//                17 -> openActivity(FloatViewActivity::class.java)
-//                18 -> openActivity(GuideLineActivity::class.java)
-//                19 -> openActivity(DividerActivity::class.java)
-//                20 -> openActivity(DynamicLayoutActivity::class.java)
+            val item = mMessageAdapter.getData()[position]
+            when (item.type) {
+                MessageType.TabLayout -> openActivity<TabLayoutActivity>(requireActivity())
+//                MessageType.TabLayoutCustomView -> openActivity(TabLayoutCustomViewActivity::class.java)
+//                MessageType.CardView -> openActivity(CardViewActivity::class.java)
+//                MessageType.BottomNavigation -> openActivity(BottomNavigationActivity::class.java)
+//                MessageType.SearchView -> openActivity(SearchViewActivity::class.java)
+//                MessageType.BottomSheet -> openActivity(BottomSheetActivity::class.java)
+//                MessageType.ShapeableImageView -> openActivity(ShapeableImageViewActivity::class.java)
+//                MessageType.BadgeDrawable -> openActivity(BadgeDrawableActivity::class.java)
+//                MessageType.DragRecyclerView -> openActivity(DragRecyclerViewActivity::class.java)
+//                MessageType.Notification -> openActivity(NotificationActivity::class.java)
+//                MessageType.FloatView -> openActivity(FloatViewActivity::class.java)
+//                MessageType.GuideLine -> openActivity(GuideLineActivity::class.java)
+//                MessageType.Divider -> openActivity(DividerActivity::class.java)
+//                MessageType.DynamicLayout -> openActivity(DynamicLayoutActivity::class.java)
+                MessageType.MaterialButton -> openActivity<MaterialButtonActivity>(requireActivity())
+
             }
         }
     }
@@ -100,34 +97,48 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
     }
 
 
-    private fun getListData(): MutableList<String> {
+    private fun getListData(): MutableList<MessageItem> {
         return mutableListOf(
-            getString(R.string.swipe_refresh_layout),
-            getString(R.string.floating_action_button),
-            getString(R.string.snack_bar),
-            getString(R.string.tab_layout),
-            getString(R.string.tab_layout_custom_view),
-            getString(R.string.card_view),
-            getString(R.string.bottom_navigation),
-            getString(R.string.collapsing_toolbar),
-            getString(R.string.text_input_layout),
-            getString(R.string.search_view),
-            getString(R.string.drawer_layout),
-            getString(R.string.bottom_sheet),
-            getString(R.string.material_button),
-            getString(R.string.shapeable_image_view),
-            getString(R.string.badge_drawable),
-            getString(R.string.drag_recyclerview),
-            getString(R.string.notification),
-            getString(R.string.float_view),
-            getString(R.string.guide_line),
-            getString(R.string.divider),
-            getString(R.string.dynamic_layout)
-
+            MessageItem(MessageType.TabLayout, getString(R.string.tab_layout)),
+//            MessageItem(MessageType.TabLayoutCustomView, getString(R.string.tab_layout_custom_view)),
+//            MessageItem(MessageType.CardView, getString(R.string.card_view)),
+//            MessageItem(MessageType.BottomNavigation, getString(R.string.bottom_navigation)),
+//            MessageItem(MessageType.SearchView, getString(R.string.search_view)),
+//            MessageItem(MessageType.BottomSheet, getString(R.string.bottom_sheet)),
+//            MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
+//            MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
+//            MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
+//            MessageItem(MessageType.Notification, getString(R.string.notification)),
+//            MessageItem(MessageType.FloatView, getString(R.string.float_view)),
+//            MessageItem(MessageType.GuideLine, getString(R.string.guide_line)),
+//            MessageItem(MessageType.Divider, getString(R.string.divider)),
+//            MessageItem(MessageType.DynamicLayout, getString(R.string.dynamic_layout)),
+            MessageItem(MessageType.MaterialButton, getString(R.string.material_button)),
         )
     }
 
-    inner class MaterialDesignAdapter : BaseRecyclerViewAdapter<String, MessageItemBinding>() {
+    sealed class MessageType {
+        data object TabLayout : MessageType()
+
+        //        data object TabLayoutCustomView : MessageType()
+//        data object CardView : MessageType()
+//        data object BottomNavigation : MessageType()
+//        data object SearchView : MessageType()
+//        data object BottomSheet : MessageType()
+//        data object ShapeableImageView : MessageType()
+//        data object BadgeDrawable : MessageType()
+//        data object DragRecyclerView : MessageType()
+//        data object Notification : MessageType()
+//        data object FloatView : MessageType()
+//        data object GuideLine : MessageType()
+//        data object Divider : MessageType()
+//        data object DynamicLayout : MessageType()
+        data object MaterialButton : MessageType()
+    }
+
+    data class MessageItem(val type: MessageType, val title: String)
+
+    inner class MaterialDesignAdapter : BaseRecyclerViewAdapter<MessageItem, MessageItemBinding>() {
         override fun getViewBinding(
             layoutInflater: LayoutInflater,
             parent: ViewGroup,
@@ -136,12 +147,12 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
             return MessageItemBinding.inflate(layoutInflater, parent, false)
         }
 
-        override fun onBindDefViewHolder(holder: BaseBindViewHolder<MessageItemBinding>, item: String?, position: Int) {
+        override fun onBindDefViewHolder(holder: BaseBindViewHolder<MessageItemBinding>, item: MessageItem?, position: Int) {
             if (item == null) {
                 return
             }
             holder.binding.apply {
-                itemTextView.text = item
+                itemTextView.text = item.title
             }
         }
     }
