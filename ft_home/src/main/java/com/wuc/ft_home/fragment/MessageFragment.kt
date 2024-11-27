@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.R
 import com.wuc.ft_home.activity.MaterialButtonActivity
+import com.wuc.ft_home.activity.ShapeableImageViewActivity
 import com.wuc.ft_home.activity.TabLayoutActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
 import com.wuc.ft_home.databinding.MessageItemBinding
@@ -71,7 +72,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
 //                MessageType.BottomNavigation -> openActivity(BottomNavigationActivity::class.java)
 //                MessageType.SearchView -> openActivity(SearchViewActivity::class.java)
 //                MessageType.BottomSheet -> openActivity(BottomSheetActivity::class.java)
-//                MessageType.ShapeableImageView -> openActivity(ShapeableImageViewActivity::class.java)
+                MessageType.ShapeableImageView -> openActivity<ShapeableImageViewActivity>(requireActivity())
 //                MessageType.BadgeDrawable -> openActivity(BadgeDrawableActivity::class.java)
 //                MessageType.DragRecyclerView -> openActivity(DragRecyclerViewActivity::class.java)
 //                MessageType.Notification -> openActivity(NotificationActivity::class.java)
@@ -100,12 +101,11 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
     private fun getListData(): MutableList<MessageItem> {
         return mutableListOf(
             MessageItem(MessageType.TabLayout, getString(R.string.tab_layout)),
-//            MessageItem(MessageType.TabLayoutCustomView, getString(R.string.tab_layout_custom_view)),
 //            MessageItem(MessageType.CardView, getString(R.string.card_view)),
 //            MessageItem(MessageType.BottomNavigation, getString(R.string.bottom_navigation)),
 //            MessageItem(MessageType.SearchView, getString(R.string.search_view)),
 //            MessageItem(MessageType.BottomSheet, getString(R.string.bottom_sheet)),
-//            MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
+            MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
 //            MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
 //            MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
 //            MessageItem(MessageType.Notification, getString(R.string.notification)),
@@ -120,12 +120,11 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
     sealed class MessageType {
         data object TabLayout : MessageType()
 
-        //        data object TabLayoutCustomView : MessageType()
 //        data object CardView : MessageType()
 //        data object BottomNavigation : MessageType()
 //        data object SearchView : MessageType()
 //        data object BottomSheet : MessageType()
-//        data object ShapeableImageView : MessageType()
+        data object ShapeableImageView : MessageType()
 //        data object BadgeDrawable : MessageType()
 //        data object DragRecyclerView : MessageType()
 //        data object Notification : MessageType()

@@ -8,9 +8,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".activity.MaterialButtonActivity"
+            android:name=".activity.ShapeableImageViewActivity"
             android:exported="false" />
-        <!-- 重启应用（必须在独立进程） -->
+        <activity
+            android:name=".activity.MaterialButtonActivity"
+            android:exported="false" /> <!-- 重启应用（必须在独立进程） -->
         <activity
             android:name=".activity.RestartActivity"
             android:exported="false"
@@ -30,7 +32,7 @@
             android:exported="false"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.TabLayoutActivity"/>
+        <activity android:name=".activity.TabLayoutActivity" />
     </application>
 
 </manifest>
