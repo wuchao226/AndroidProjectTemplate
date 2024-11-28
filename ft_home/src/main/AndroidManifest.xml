@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".activity.DividerActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.FloatViewActivity"
             android:exported="false" />
         <activity

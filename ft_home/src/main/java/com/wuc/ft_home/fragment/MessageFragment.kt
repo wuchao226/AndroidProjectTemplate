@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.R
+import com.wuc.ft_home.activity.DividerActivity
 import com.wuc.ft_home.activity.FloatViewActivity
 import com.wuc.ft_home.activity.MaterialButtonActivity
 import com.wuc.ft_home.activity.NotificationActivity
@@ -75,7 +76,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
                 MessageType.Notification -> openActivity<NotificationActivity>(requireActivity())
                 MessageType.FloatView -> openActivity<FloatViewActivity>(requireActivity())
 //                MessageType.GuideLine -> openActivity(GuideLineActivity::class.java)
-//                MessageType.Divider -> openActivity(DividerActivity::class.java)
+                MessageType.Divider -> openActivity<DividerActivity>(requireActivity())
 //                MessageType.DynamicLayout -> openActivity(DynamicLayoutActivity::class.java)
                 MessageType.MaterialButton -> openActivity<MaterialButtonActivity>(requireActivity())
 
@@ -107,7 +108,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
             MessageItem(MessageType.Notification, getString(R.string.notification)),
             MessageItem(MessageType.FloatView, getString(R.string.float_view)),
 //            MessageItem(MessageType.GuideLine, getString(R.string.guide_line)),
-//            MessageItem(MessageType.Divider, getString(R.string.divider)),
+            MessageItem(MessageType.Divider, getString(R.string.divider)),
 //            MessageItem(MessageType.DynamicLayout, getString(R.string.dynamic_layout)),
             MessageItem(MessageType.MaterialButton, getString(R.string.material_button)),
         )
@@ -124,7 +125,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
         data object Notification : MessageType()
         data object FloatView : MessageType()
 //        data object GuideLine : MessageType()
-//        data object Divider : MessageType()
+        data object Divider : MessageType()
 //        data object DynamicLayout : MessageType()
         data object MaterialButton : MessageType()
     }
