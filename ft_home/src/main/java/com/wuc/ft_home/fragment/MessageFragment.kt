@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.gyf.immersionbar.ImmersionBar
 import com.wuc.ft_home.R
+import com.wuc.ft_home.activity.BadgeDrawableActivity
 import com.wuc.ft_home.activity.DividerActivity
 import com.wuc.ft_home.activity.FloatViewActivity
 import com.wuc.ft_home.activity.MaterialButtonActivity
@@ -71,7 +72,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
 //                MessageType.SearchView -> openActivity(SearchViewActivity::class.java)
 //                MessageType.BottomSheet -> openActivity(BottomSheetActivity::class.java)
                 MessageType.ShapeableImageView -> openActivity<ShapeableImageViewActivity>(requireActivity())
-//                MessageType.BadgeDrawable -> openActivity(BadgeDrawableActivity::class.java)
+                MessageType.BadgeDrawable -> openActivity<BadgeDrawableActivity>(requireActivity())
 //                MessageType.DragRecyclerView -> openActivity(DragRecyclerViewActivity::class.java)
                 MessageType.Notification -> openActivity<NotificationActivity>(requireActivity())
                 MessageType.FloatView -> openActivity<FloatViewActivity>(requireActivity())
@@ -103,7 +104,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
 //            MessageItem(MessageType.SearchView, getString(R.string.search_view)),
 //            MessageItem(MessageType.BottomSheet, getString(R.string.bottom_sheet)),
             MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
-//            MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
+            MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
 //            MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
             MessageItem(MessageType.Notification, getString(R.string.notification)),
             MessageItem(MessageType.FloatView, getString(R.string.float_view)),
@@ -120,7 +121,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
 //        data object SearchView : MessageType()
 //        data object BottomSheet : MessageType()
         data object ShapeableImageView : MessageType()
-//        data object BadgeDrawable : MessageType()
+        data object BadgeDrawable : MessageType()
 //        data object DragRecyclerView : MessageType()
         data object Notification : MessageType()
         data object FloatView : MessageType()
