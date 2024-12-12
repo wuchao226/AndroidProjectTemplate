@@ -10,6 +10,7 @@ import com.wuc.ft_home.R
 import com.wuc.ft_home.activity.BadgeDrawableActivity
 import com.wuc.ft_home.activity.BottomSheetActivity
 import com.wuc.ft_home.activity.DividerActivity
+import com.wuc.ft_home.drag.DragRecyclerViewActivity
 import com.wuc.ft_home.activity.FloatViewActivity
 import com.wuc.ft_home.activity.MaterialButtonActivity
 import com.wuc.ft_home.activity.NotificationActivity
@@ -74,7 +75,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
                 MessageType.BottomSheet -> openActivity<BottomSheetActivity>(requireActivity())
                 MessageType.ShapeableImageView -> openActivity<ShapeableImageViewActivity>(requireActivity())
                 MessageType.BadgeDrawable -> openActivity<BadgeDrawableActivity>(requireActivity())
-//                MessageType.DragRecyclerView -> openActivity(DragRecyclerViewActivity::class.java)
+                MessageType.DragRecyclerView -> openActivity<DragRecyclerViewActivity>(requireActivity())
                 MessageType.Notification -> openActivity<NotificationActivity>(requireActivity())
                 MessageType.FloatView -> openActivity<FloatViewActivity>(requireActivity())
 //                MessageType.GuideLine -> openActivity(GuideLineActivity::class.java)
@@ -106,7 +107,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
             MessageItem(MessageType.BottomSheet, getString(R.string.bottom_sheet)),
             MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
             MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
-//            MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
+            MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
             MessageItem(MessageType.Notification, getString(R.string.notification)),
             MessageItem(MessageType.FloatView, getString(R.string.float_view)),
 //            MessageItem(MessageType.GuideLine, getString(R.string.guide_line)),
@@ -123,7 +124,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
         data object BottomSheet : MessageType()
         data object ShapeableImageView : MessageType()
         data object BadgeDrawable : MessageType()
-//        data object DragRecyclerView : MessageType()
+        data object DragRecyclerView : MessageType()
         data object Notification : MessageType()
         data object FloatView : MessageType()
 //        data object GuideLine : MessageType()

@@ -39,7 +39,7 @@ abstract class BaseRecyclerViewAdapter<T, B : ViewBinding> : RecyclerView.Adapte
     /**
      * Item长按事件监听
      */
-    var onItemLongClickListener: ((view: View, position: Int) -> Boolean) = { view, position -> false }
+    var onItemLongClickListener: ((holder: BaseViewHolder, view: View, position: Int) -> Boolean) = { holder, view, position -> false }
 
     /**
      * 子类不可重载，如果有需要请重写[onCreateDefViewHolder]实现自定义ViewHolder
@@ -103,7 +103,7 @@ abstract class BaseRecyclerViewAdapter<T, B : ViewBinding> : RecyclerView.Adapte
     protected open fun bindViewClickListener(holder: BaseViewHolder) {
         onItemClickListener?.let {
             holder.itemView.setOnClickListener { v ->
-                var position = holder.adapterPosition
+                var position = holder.bindingAdapterPosition
                 if (position == RecyclerView.NO_POSITION) {
                     return@setOnClickListener
                 }
@@ -111,14 +111,14 @@ abstract class BaseRecyclerViewAdapter<T, B : ViewBinding> : RecyclerView.Adapte
                 it.invoke(holder.itemView, position)
             }
         }
-        onItemLongClickListener?.let {
+        onItemLongClickListener.let {
             holder.itemView.setOnLongClickListener { v ->
-                var position = holder.adapterPosition
+                var position = holder.bindingAdapterPosition
                 if (position == RecyclerView.NO_POSITION) {
                     return@setOnLongClickListener false
                 }
                 position -= headerLayoutCount
-                it.invoke(holder.itemView, position)
+                it.invoke(holder, holder.itemView, position)
             }
         }
     }
