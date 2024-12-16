@@ -23,6 +23,7 @@ class NestChildRecyclerAdapter  : BaseRecyclerViewAdapter<String, ItemNestedChil
     override fun onBindDefViewHolder(holder: BaseBindViewHolder<ItemNestedChildTextBinding>, item: String?, position: Int) {
         WLogUtils.i("${item ?: ""} item $position")
         holder.binding.txtTitle.text = "${item ?: ""} item $position"
+        holder.binding.txtTitle.minHeight = (200 + position * 1.1f).toInt()
         holder.binding.txtTitle.setOnClickListener {
             toast("click ${item ?: ""} item $position")
         }

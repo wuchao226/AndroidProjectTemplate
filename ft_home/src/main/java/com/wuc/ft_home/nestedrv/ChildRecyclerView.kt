@@ -4,9 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import com.wuc.ft_home.nestedrv.NestedOverScroller.invokeCurrentVelocity
-import kotlin.math.abs
+import android.view.ViewConfiguration
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
+import com.wuc.ft_home.R
 
 
 /**
@@ -18,125 +19,210 @@ class ChildRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+) : BaseRecyclerView(context, attrs, defStyleAttr) {
 
-    private var mParentRecyclerView: ParentRecyclerView? = null
+    private var parentRecyclerView: ParentRecyclerView? = null
 
-    /**
-     * fling时的加速度
-     */
-    private var mVelocity = 0
+    private val mTouchSlop: Int
+    private var downX: Float = 0f
+    private var downY: Float = 0f
 
-    private var mLastInterceptX = 0
+    private var dragState: Int = DRAG_IDLE
 
-    private var mLastInterceptY = 0
+    companion object {
+        private const val DRAG_IDLE = 0
+        private const val DRAG_VERTICAL = 1
+        private const val DRAG_HORIZONTAL = 2
+    }
 
     init {
-        this.overScrollMode = View.OVER_SCROLL_NEVER
-        addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    // 当滑动停止时
-                    dispatchParentFling()
-                }
+        val configuration = ViewConfiguration.get(context)
+        mTouchSlop = configuration.scaledTouchSlop
+    }
+
+    override fun onScrollStateChanged(state: Int) {
+        super.onScrollStateChanged(state)
+
+        // 是否已经停止scrolling
+        if (state == SCROLL_STATE_IDLE) {
+            // 这里是考虑到当整个childRecyclerView被detach之后，及时上报parentRecyclerView
+            val velocityY = getVelocityY()
+            if (velocityY < 0 && computeVerticalScrollOffset() == 0) {
+                parentRecyclerView?.fling(0, velocityY)
             }
-        })
+        }
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            // ACTION_DOWN 触摸按下，保存临时变量
+            dragState = DRAG_IDLE
+            downX = ev.rawX
+            downY = ev.rawY
+            this.stopFling()
+        } else if (ev.action == MotionEvent.ACTION_MOVE) {
+            // ACTION_MOVE 判定垂直还是水平滑动
+            //获取到距离差
+            val xDistance = Math.abs(ev.rawX - downX)
+            val yDistance = Math.abs(ev.rawY - downY)
+            if (xDistance > yDistance && xDistance > mTouchSlop) {
+                // 水平滑动
+                return true
+            } else if (xDistance == 0f && yDistance == 0f) {
+                // 点击
+                return super.onInterceptTouchEvent(ev)
+            } else if (yDistance >= xDistance && yDistance > 8f) {
+                // 垂直滑动
+                return true
+            }
+        }
+//        Log.e("super.onInter",super.onInterceptTouchEvent(ev).toString())
+        return super.onInterceptTouchEvent(ev)
     }
 
     /**
-     * 将剩余的加速度传递给父RecyclerView进行处理。
-     * 此方法首先确保父RecyclerView已经被正确初始化。
-     * 如果当前子RecyclerView已滚动到顶部并且存在剩余的加速度，
-     * 则尝试将这些加速度平滑地传递给父RecyclerView。
+     * 这段逻辑主要是RecyclerView最底部，垂直上拉后居然还能左右滑动，不能忍
      */
-    private fun dispatchParentFling() {
-        // 确保父RecyclerView已经被初始化
-        ensureParentRecyclerView()
-        // 检查是否满足将加速度传递给父RecyclerView的条件
-        if (mParentRecyclerView != null && isScrollToTop() && mVelocity != 0) {
-            // 从NestedOverScroller中获取当前的滚动速度
-            var velocityY = invokeCurrentVelocity(this)
-            // 如果当前速度非常小（小于或等于2.0E-5f），则使用原始速度的一半
-            if (abs(velocityY.toDouble()) <= 2.0E-5f) {
-                velocityY = mVelocity.toFloat() * 0.5f
-            } else {
-                // 否则，将速度减少35%，以便更平滑地减速
-                velocityY *= 0.65f
-            }
-            // 调用父RecyclerView的fling方法，传递处理过的速度
-            mParentRecyclerView?.fling(0, velocityY.toInt())
-            // 重置当前RecyclerView的速度
-            mVelocity = 0
-        }
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        // 当触摸事件为按下动作时，重置滑动速度为0
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
         if (ev.action == MotionEvent.ACTION_DOWN) {
-            mVelocity = 0
-        }
+            // 一上来就禁止ParentRecyclerView拦截Touch事件
+            parent.requestDisallowInterceptTouchEvent(true)
+        } else if (ev.action == MotionEvent.ACTION_MOVE) {
+            // ACTION_MOVE 判定垂直还是水平滑动
+//            if (dragState == DRAG_IDLE) {
+            //获取到距离差
+            val xDistance = Math.abs(ev.rawX - downX)
+            val yDistance = Math.abs(ev.rawY - downY)
 
-        // 获取当前触摸事件的X和Y坐标
-        val x = ev.rawX.toInt()
-        val y = ev.rawY.toInt()
-
-        // 如果当前动作不是移动动作，则更新最后拦截的X和Y坐标
-        if (ev.action != MotionEvent.ACTION_MOVE) {
-            mLastInterceptX = x
-            mLastInterceptY = y
-        }
-
-        // 计算X和Y方向上的位移差
-        val deltaX = x - mLastInterceptX
-        val deltaY = y - mLastInterceptY
-
-        // 如果当前RecyclerView已滚动到顶部，并且Y方向的位移大于X方向的位移，并且存在父视图
-        if (isScrollToTop() && abs(deltaX.toDouble()) <= abs(deltaY.toDouble()) && parent != null) {
-            // 子容器滚动到顶部，继续向上滑动，此时父容器需要继续拦截事件。与父容器 onInterceptTouchEvent 对应
-            // 当子容器已滚动到顶部且用户尝试继续向上滑动时，请求父容器不要拦截触摸事件，允许子容器处理
-            parent.requestDisallowInterceptTouchEvent(false)
-        }
-
-        // 调用父类的dispatchTouchEvent方法，继续传递触摸事件
-        return super.dispatchTouchEvent(ev)
-    }
-
-    override fun fling(velocityX: Int, velocityY: Int): Boolean {
-        // 检查视图是否已经附加到窗口，如果没有，则不执行fling操作
-        if (!isAttachedToWindow) return false
-        // 调用父类的fling方法，尝试进行fling操作
-        val fling = super.fling(velocityX, velocityY)
-        // 如果fling操作未成功或者Y轴速度为正（向下滑动），则将mVelocity设置为0，否则保留Y轴速度
-        mVelocity = if (!fling || velocityY >= 0) {
-            0
-        } else {
-            velocityY
-        }
-        // 返回fling操作的结果
-        return fling
-    }
-
-    // 检查是否可以向上滚动，即是否已滚动到顶部
-    fun isScrollToTop(): Boolean {
-        return !canScrollVertically(-1)
-    }
-
-    // 检查是否可以向下滚动，即是否已滚动到底部
-    fun isScrollToBottom(): Boolean {
-        return !canScrollVertically(1)
-    }
-
-    // 确保mParentRecyclerView引用指向正确的父RecyclerView
-    private fun ensureParentRecyclerView() {
-        // 如果mParentRecyclerView为空，则从当前视图的父视图开始向上查找，直到找到类型为ParentRecyclerView的视图
-        if (mParentRecyclerView == null) {
-            var parentView = parent
-            while (parentView !is ParentRecyclerView) {
-                parentView = parentView.parent
+            if (xDistance > yDistance && xDistance > mTouchSlop) {
+                // 水平滑动
+                dragState = DRAG_HORIZONTAL
+                // touch事件允许 ViewPager / ViewPager2 处理
+                parent.requestDisallowInterceptTouchEvent(false)
+            } else if (yDistance > xDistance && yDistance > mTouchSlop) {
+                // 垂直滑动
+                dragState = DRAG_VERTICAL
+                parent.requestDisallowInterceptTouchEvent(true)
             }
-            // 将找到的ParentRecyclerView赋值给mParentRecyclerView
-            mParentRecyclerView = parentView
+//            }
+        }
+        return super.onTouchEvent(ev)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        connectToParent()
+    }
+
+    /**
+     * 跟ParentView建立连接，主要两件事情 -
+     * 1. 将自己上报ViewPager/ViewPager2，通过tag关联到currentItem的View中
+     * 2. 将ViewPager/ViewPager2报告给ParentRecyclerView
+     * 这一坨代码需要跟ParentRecyclerView连起来看，否则可能会懵
+     */
+    private fun connectToParent() {
+        var viewPager: ViewPager? = null
+        var viewPager2: ViewPager2? = null
+        var lastTraverseView: View = this
+
+        var parentView: View? = this.parent as View
+        while (parentView != null) {
+            val parentClassName = parentView::class.java.canonicalName
+            if ("androidx.viewpager2.widget.ViewPager2.RecyclerViewImpl" == parentClassName) {
+                // 使用ViewPager2，parentView的顺序如下:
+                // ChildRecyclerView -> 若干View -> FrameLayout -> RecyclerViewImpl -> ViewPager2 -> 若干View -> ParentRecyclerView
+
+                // 此时lastTraverseView是上方注释中的FrameLayout，算是"ViewPager2.child"，我们此处将ChildRecyclerView设置到FrameLayout的tag中
+                // 这个tag会在ParentRecyclerView中用到
+                lastTraverseView.setTag(R.id.tag_saved_child_recycler_view, this)
+            } else if (parentView is ViewPager) {
+                // 使用ViewPager，parentView顺序如下：
+                // ChildRecyclerView -> 若干View -> ViewPager -> 若干View -> ParentRecyclerView
+                // 此处将ChildRecyclerView保存到ViewPager最直接的子View中
+                if (lastTraverseView != this) {
+                    // 这个tag会在ParentRecyclerView中用到
+                    lastTraverseView.setTag(R.id.tag_saved_child_recycler_view, this)
+                }
+
+                // 碰到ViewPager，需要上报给ParentRecyclerView
+                viewPager = parentView
+            } else if (parentView is ViewPager2) {
+                // 碰到ViewPager2，需要上报给ParentRecyclerView
+                viewPager2 = parentView
+            } else if (parentView is ParentRecyclerView) {
+                // 碰到ParentRecyclerView，设置结束
+                parentView.setInnerViewPager(viewPager)
+                parentView.setInnerViewPager2(viewPager2)
+                parentView.setChildPagerContainer(lastTraverseView)
+                this.parentRecyclerView = parentView
+                return
+            }
+
+            lastTraverseView = parentView
+            parentView = parentView.parent as View
+        }
+    }
+
+
+    override fun dispatchTouchEvent(e: MotionEvent): Boolean {
+        val x = e.rawX
+        val y = e.rawY
+        when (e.action) {
+            MotionEvent.ACTION_DOWN -> {
+                //将按下时的坐标存储
+                downX = x
+                downY = y
+                // true 表示让ParentRecyclerView不要拦截
+                parent.requestDisallowInterceptTouchEvent(true)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                //获取到距离差
+                val dx: Float = x - downX
+                val dy: Float = y - downY
+                //通过距离差判断方向
+                val orientation = getOrientation(dx, dy)
+                val location = intArrayOf(0, 0)
+                getLocationOnScreen(location)
+                when (orientation) {
+                    "d" ->
+                        if (canScrollVertically(-1)) {
+                            // 可以向下滑动时让ParentRecyclerView不要拦截
+                            parent.requestDisallowInterceptTouchEvent(true)
+                        } else {
+                            // 内层RecyclerView下拉到最顶部时
+                            if (dy < 24f) {
+                                // 如果滑动的距离小于这个值依然让Parent不拦截
+                                parent.requestDisallowInterceptTouchEvent(true)
+                            } else {
+                                // 将滑动事件抛给Parent，这样可以随着Parent一起滑动
+                                parent.requestDisallowInterceptTouchEvent(false)
+                            }
+                        }
+                    "u" -> {
+                        // 向上滑动时，始终由ChildRecyclerView处理
+                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                    "r" -> {
+//                        Log.e("ChildRecyclerView", "r  不要拦截")
+//                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                    "l" -> {
+//                        Log.e("ChildRecyclerView", "l  不要拦截")
+//                        parent.requestDisallowInterceptTouchEvent(true)
+                    }
+                }
+            }
+        }
+        return super.dispatchTouchEvent(e)
+    }
+
+    private fun getOrientation(dx: Float, dy: Float): String {
+        return if (Math.abs(dx) > Math.abs(dy)) {
+            //X轴移动
+            if (dx > 0) "r" else "l" //右,左
+        } else {
+            //Y轴移动
+            if (dy > 0) "d" else "u" //下//上
         }
     }
 }

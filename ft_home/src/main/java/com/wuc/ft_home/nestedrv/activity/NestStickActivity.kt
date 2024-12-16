@@ -3,13 +3,15 @@ package com.wuc.ft_home.nestedrv.activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.ActivityNestStickBinding
 import com.wuc.ft_home.nestedrv.ItemParent
 import com.wuc.ft_home.nestedrv.adapter.NestedParentAdapter
 import com.wuc.ft_home.toolbar.ToolbarActivity
-import com.wuc.lib_common.interfaces.MultiItemEntity
+import com.wuc.lib_base.ext.dp
+import com.wuc.lib_base.ext.pxToDp
 
 
 /**
@@ -20,7 +22,8 @@ import com.wuc.lib_common.interfaces.MultiItemEntity
  * Android Tab吸顶 嵌套滚动通用实现方案:https://juejin.cn/post/7312338839695081499#heading-3
  */
 class NestStickActivity : ToolbarActivity<ActivityNestStickBinding>() {
-
+    // 广告是否关闭
+    private var floatAdClosed = false
     override fun setToolbar() {
         mToolbar.setTitle(R.string.recyclerview_nested)
     }
@@ -38,6 +41,26 @@ class NestStickActivity : ToolbarActivity<ActivityNestStickBinding>() {
                 ItemParent(itemType = NestedParentAdapter.TYPE_INNER, -1)
             )
         )
+        binding.parentRecyclerView.setStickyListener {
+            if (!floatAdClosed) {
+                if (it) {
+                    // 置顶了
+                    binding.homeFloatLayout.visibility = View.VISIBLE
+                } else {
+                    // 没有置顶
+                    binding.homeFloatLayout.visibility = View.GONE
+                }
+            }
+        }
+        if (!floatAdClosed) {
+            // 设置悬浮布局的高度
+            binding.parentRecyclerView.setStickyHeight(50f.dp.toInt())
+        }
+        binding.tvText.setOnClickListener {
+            binding.homeFloatLayout.visibility = View.GONE
+            floatAdClosed = true
+            binding.parentRecyclerView.setStickyHeight(0)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
