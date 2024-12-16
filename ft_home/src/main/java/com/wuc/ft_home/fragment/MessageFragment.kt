@@ -18,6 +18,7 @@ import com.wuc.ft_home.activity.ShapeableImageViewActivity
 import com.wuc.ft_home.activity.TabLayoutActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
 import com.wuc.ft_home.databinding.MessageItemBinding
+import com.wuc.ft_home.nestedrv.activity.NestStickActivity
 import com.wuc.ft_home.toolbar.ToolbarFragment
 import com.wuc.lib_base.ext.doOnDebouncingClick
 import com.wuc.lib_base.ext.isAppDarkMode
@@ -76,6 +77,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
                 MessageType.ShapeableImageView -> openActivity<ShapeableImageViewActivity>(requireActivity())
                 MessageType.BadgeDrawable -> openActivity<BadgeDrawableActivity>(requireActivity())
                 MessageType.DragRecyclerView -> openActivity<DragRecyclerViewActivity>(requireActivity())
+                MessageType.NestedStickRecyclerView -> openActivity<NestStickActivity>(requireActivity())
                 MessageType.Notification -> openActivity<NotificationActivity>(requireActivity())
                 MessageType.FloatView -> openActivity<FloatViewActivity>(requireActivity())
 //                MessageType.GuideLine -> openActivity(GuideLineActivity::class.java)
@@ -108,6 +110,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
             MessageItem(MessageType.ShapeableImageView, getString(R.string.shapeable_image_view)),
             MessageItem(MessageType.BadgeDrawable, getString(R.string.badge_drawable)),
             MessageItem(MessageType.DragRecyclerView, getString(R.string.drag_recyclerview)),
+            MessageItem(MessageType.NestedStickRecyclerView, getString(R.string.recyclerview_nested)),
             MessageItem(MessageType.Notification, getString(R.string.notification)),
             MessageItem(MessageType.FloatView, getString(R.string.float_view)),
 //            MessageItem(MessageType.GuideLine, getString(R.string.guide_line)),
@@ -125,6 +128,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
         data object ShapeableImageView : MessageType()
         data object BadgeDrawable : MessageType()
         data object DragRecyclerView : MessageType()
+        data object NestedStickRecyclerView : MessageType()
         data object Notification : MessageType()
         data object FloatView : MessageType()
 //        data object GuideLine : MessageType()
