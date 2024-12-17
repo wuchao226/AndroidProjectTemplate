@@ -7,11 +7,10 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wuc.ft_home.R
 import com.wuc.ft_home.databinding.ActivityNestStickBinding
-import com.wuc.ft_home.nestedrv.ItemParent
+import com.wuc.ft_home.nestedrv.bean.ItemParent
 import com.wuc.ft_home.nestedrv.adapter.NestedParentAdapter
 import com.wuc.ft_home.toolbar.ToolbarActivity
 import com.wuc.lib_base.ext.dp
-import com.wuc.lib_base.ext.pxToDp
 
 
 /**

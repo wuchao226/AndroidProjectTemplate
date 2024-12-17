@@ -1,4 +1,4 @@
-package com.wuc.ft_home.nestedrv
+package com.wuc.ft_home.nestedrv.bean
 
 import com.wuc.lib_common.interfaces.MultiItemEntity
 
@@ -7,7 +7,7 @@ import com.wuc.lib_common.interfaces.MultiItemEntity
  * @date: 2024/12/16
  * @description:
  */
-data class ItemChild(
+data class ItemParent(
     override val itemType: Int,
-    val title: String = "",
+    val imgId: Int,
 ) : MultiItemEntity

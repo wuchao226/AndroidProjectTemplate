@@ -9,7 +9,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import com.wuc.ft_home.databinding.ItemNestedInnerBinding
 import com.wuc.ft_home.databinding.ItemNestedParentBinding
-import com.wuc.ft_home.nestedrv.ItemParent
+import com.wuc.ft_home.nestedrv.bean.ItemParent
 import com.wuc.ft_home.nestedrv.fragment.NestedChildFragment
 import com.wuc.lib_base.ext.getCompatDrawable
 import com.wuc.lib_base.ext.screenWidth
