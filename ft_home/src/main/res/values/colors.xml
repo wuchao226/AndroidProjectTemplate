@@ -5,4 +5,8 @@
     <color name="greenPrimary">#4CAF50</color>
     <color name="greenDark">#388E3C</color>
     <color name="greenAccent">#8BC34A</color>
+    <color name="black_deep">#FF000000</color>
+    <color name="bbbbbb_2.3">#bbbbbb</color>
+    <item name="gray_holo_light" type="color">#ffd0d0d0</item>
+    <color name="green_deep_color">#6fb30d</color>
 </resources>

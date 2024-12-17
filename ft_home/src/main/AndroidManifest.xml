@@ -10,6 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".activity.PopupWindowActivity"
+            android:exported="false" />
+        <activity
             android:name=".nestedrv.activity.NestStickActivity"
             android:exported="false" />
         <activity

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/gray_holo_light"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="锄禾日当午，汗滴禾下土；谁知盘中餐，粒粒皆辛苦。"
+        android:textColor="@color/black" />
+
+</LinearLayout>

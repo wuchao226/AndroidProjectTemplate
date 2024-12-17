@@ -14,6 +14,7 @@ import com.wuc.ft_home.drag.DragRecyclerViewActivity
 import com.wuc.ft_home.activity.FloatViewActivity
 import com.wuc.ft_home.activity.MaterialButtonActivity
 import com.wuc.ft_home.activity.NotificationActivity
+import com.wuc.ft_home.activity.PopupWindowActivity
 import com.wuc.ft_home.activity.ShapeableImageViewActivity
 import com.wuc.ft_home.activity.TabLayoutActivity
 import com.wuc.ft_home.databinding.FragmentMessageBinding
@@ -84,6 +85,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
                 MessageType.Divider -> openActivity<DividerActivity>(requireActivity())
 //                MessageType.DynamicLayout -> openActivity(DynamicLayoutActivity::class.java)
                 MessageType.MaterialButton -> openActivity<MaterialButtonActivity>(requireActivity())
+                MessageType.PopupWindow -> openActivity<PopupWindowActivity>(requireActivity())
 
             }
         }
@@ -117,6 +119,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
             MessageItem(MessageType.Divider, getString(R.string.divider)),
 //            MessageItem(MessageType.DynamicLayout, getString(R.string.dynamic_layout)),
             MessageItem(MessageType.MaterialButton, getString(R.string.material_button)),
+            MessageItem(MessageType.PopupWindow, getString(R.string.PopupWindow)),
         )
     }
 
@@ -135,6 +138,7 @@ class MessageFragment : ToolbarFragment<FragmentMessageBinding>() {
         data object Divider : MessageType()
 //        data object DynamicLayout : MessageType()
         data object MaterialButton : MessageType()
+        data object PopupWindow : MessageType()
     }
 
     data class MessageItem(val type: MessageType, val title: String)

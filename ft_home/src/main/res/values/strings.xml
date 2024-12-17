@@ -43,4 +43,5 @@
     <string name="divider">Divider</string>
     <string name="dynamic_layout">DynamicLayout</string>
     <string name="recyclerview_nested">RecyclerView 嵌套滑动置顶</string>
+    <string name="PopupWindow">PopupWindow示例</string>
 </resources>
