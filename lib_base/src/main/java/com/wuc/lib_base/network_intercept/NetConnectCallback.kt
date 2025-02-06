@@ -14,7 +14,10 @@ import androidx.annotation.RequiresApi
  * @date: 2024/9/9
  * @desc:
  */
-class NetConnectCallback(private val context: Context, private val onNetworkChanged: (NetWorkUtil.NetworkType) -> Unit) : ConnectivityManager.NetworkCallback() {
+class NetConnectCallback(
+    private val context: Context,
+    private val onNetworkChanged: (NetWorkUtil.NetworkType) -> Unit
+) : ConnectivityManager.NetworkCallback() {
 
     /**
      * 网络可用的回调连接成功
@@ -77,13 +80,17 @@ class NetConnectCallback(private val context: Context, private val onNetworkChan
                     "& 数据连接 = $isCellular " +
                     "& wifi连接= $isWifi"
         )
-        if (isWifi && !isValidated) {
-            // Wi-Fi 状态更新不准确，进一步处理
-            Log.d(NetWorkMonitorManager.TAG, "Wi-Fi 可能未连接到互联网")
-        } else if (isCellular && !isValidated) {
-            // 移动数据状态更新不准确，进一步处理
-            Log.d(NetWorkMonitorManager.TAG, "移动数据可能未连接到互联网")
+        if (!isValidated) {
+            if (isWifi) {
+                // Wi-Fi 状态更新不准确，进一步处理
+                Log.d(NetWorkMonitorManager.TAG, "NetConnectCallback--> Wi-Fi 可能未连接到互联网")
+            } else if (isCellular) {
+                // 移动数据状态更新不准确，进一步处理
+                Log.d(NetWorkMonitorManager.TAG, "NetConnectCallback--> 移动数据可能未连接到互联网")
+            }
+            return // 直接返回，避免错误地通知网络变化
         }
+        // 只有在网络可用并通过验证时，才更新网络状态
         onNetworkChanged(NetWorkUtil.getNetworkType(context))
     }
 

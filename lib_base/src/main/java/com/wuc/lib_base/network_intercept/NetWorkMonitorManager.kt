@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.wuc.lib_base.BaseApplication
+import com.wuc.lib_base.ext.application
 
 /**
  * @author: wuc
@@ -51,9 +52,6 @@ object NetWorkMonitorManager {
             postNetworkState(it)
         }
 
-        val networkReceiver = NetConnectReceiver {
-            postNetworkState(it)
-        }
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 // 如果Android版本等于7.0(API 24)或以上
@@ -69,7 +67,7 @@ object NetWorkMonitorManager {
             else -> {
                 // 广播监听, 监听“系统默认网络”，所以可以实现网络状态与类型的判断，但都存在重复回调的情况，所以要做过滤处理，以及“系统默认网络”切换到普通网络时会有偶现短暂“无网络”状态，需要做延迟处理。
                 val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-                application.registerReceiver(networkReceiver, intentFilter)
+                application.registerReceiver(NetConnectReceiver { postNetworkState(it) }, intentFilter)
             }
         }
     }
@@ -78,15 +76,19 @@ object NetWorkMonitorManager {
         val currentTimeMillis = System.currentTimeMillis()
         Log.w(TAG, "postNetworkState>> 网络状态networkType = [$networkType], lastType = [$lastType]")
         Log.w(TAG, "postNetworkState>> 是否应通知网络变化 ${shouldNotifyNetworkChange(networkType, currentTimeMillis)}")
-        if (shouldNotifyNetworkChange(networkType, currentTimeMillis)) {
-            doNotifyObserver(networkType)
-        } else {
-            // 防抖动，如果两次相同的网络状态发生在[jitterTime/1000]秒之内，那么只会触发一次
-            Log.w(TAG, "postNetworkState>> 防抖动，两次相同的网络状态[$networkType]发生在[${mJitterTime.toFloat()/1000}]秒之内，那么只会触发一次")
+        // 先同步更新 lastTimeMillis，防止并发问题
+        synchronized(this) {
+            if (!shouldNotifyNetworkChange(networkType, currentTimeMillis)) {
+                // 防抖动，如果两次相同的网络状态发生在[jitterTime/1000]秒之内，那么只会触发一次
+                Log.w(TAG, "postNetworkState>> 防抖动，两次相同的网络状态[$networkType]发生在[${mJitterTime.toFloat() / 1000}]秒之内，那么只会触发一次")
+                return
+            }
+            // 更新最新网络状态
+            lastType = networkType
+            lastTimeMillis = currentTimeMillis
         }
-        // 重新赋值最后一次的网络类型和时间戳
-        lastType = networkType
-        lastTimeMillis = currentTimeMillis
+        Log.w(TAG, "postNetworkState>> 触发网络变化通知 networkType = [$networkType], lastType = [$lastType]")
+        doNotifyObserver(networkType)
     }
 
     /**
@@ -115,8 +117,7 @@ object NetWorkMonitorManager {
      */
     private fun notifyObservers(networkType: NetWorkUtil.NetworkType) {
         mainHandler.post {
-            val isConnected =
-                networkType != NetWorkUtil.NetworkType.NETWORK_NO && networkType != NetWorkUtil.NetworkType.NETWORK_UNKNOWN
+            val isConnected = NetWorkUtil.isAvailable(application)
             for (observer in synchronized(this) { observers.toList() }) {
                 observer.onNetworkConnectionChanged(isConnected, networkType)
             }

@@ -56,9 +56,11 @@ object NetWorkUtil {
         val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectivityManager.activeNetwork ?: return false
-            val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
-            val hasNet = networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
-            hasNet
+            val capabilities = connectivityManager.getNetworkCapabilities(network)
+            val hasNet = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: return false
+            val isValidated = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            // 同时检查网络是否可用并且已验证
+            hasNet && isValidated
         } else {
             val networkInfo = connectivityManager.activeNetworkInfo
             networkInfo?.isConnectedOrConnecting == true
@@ -83,7 +85,8 @@ object NetWorkUtil {
      */
     fun getDataEnabled(context: Context): Boolean {
         return if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             try {
                 val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -227,27 +230,32 @@ object NetWorkUtil {
                         Log.d(TAG, "networkType = ${NetworkType.NETWORK_WIFI}")
                         NetworkType.NETWORK_WIFI
                     }
+
                     networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                         when (getMobileNetworkType(context)) {
                             TelephonyManager.NETWORK_TYPE_LTE -> {
                                 Log.d(TAG, "networkType = ${NetworkType.NETWORK_4G}")
                                 NetworkType.NETWORK_4G
                             }
+
                             TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_HSPA,
                             TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA -> {
                                 Log.d(TAG, "networkType = ${NetworkType.NETWORK_3G}")
                                 NetworkType.NETWORK_3G
                             }
+
                             TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_EDGE -> {
                                 Log.d(TAG, "networkType = ${NetworkType.NETWORK_2G}")
                                 NetworkType.NETWORK_2G
                             }
+
                             else -> {
                                 Log.d(TAG, "networkType = ${NetworkType.NETWORK_UNKNOWN}")
                                 NetworkType.NETWORK_UNKNOWN
                             }
                         }
                     }
+
                     else -> {
                         Log.d(TAG, "networkType = ${NetworkType.NETWORK_UNKNOWN}")
                         NetworkType.NETWORK_UNKNOWN
@@ -266,10 +274,12 @@ object NetWorkUtil {
                         TelephonyManager.NETWORK_TYPE_LTE -> NetworkType.NETWORK_4G
                         TelephonyManager.NETWORK_TYPE_UMTS, TelephonyManager.NETWORK_TYPE_HSPA,
                         TelephonyManager.NETWORK_TYPE_HSDPA, TelephonyManager.NETWORK_TYPE_HSUPA -> NetworkType.NETWORK_3G
+
                         TelephonyManager.NETWORK_TYPE_GPRS, TelephonyManager.NETWORK_TYPE_EDGE -> NetworkType.NETWORK_2G
                         else -> NetworkType.NETWORK_UNKNOWN
                     }
                 }
+
                 else -> NetworkType.NETWORK_UNKNOWN
             }
         }
