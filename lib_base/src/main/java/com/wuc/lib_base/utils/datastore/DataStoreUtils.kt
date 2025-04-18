@@ -1,8 +1,5 @@
 package com.wuc.lib_base.utils.datastore
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.byteArrayPreferencesKey
 import androidx.datastore.preferences.core.doublePreferencesKey
@@ -11,7 +8,6 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.wuc.lib_base.ext.application
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -22,7 +18,6 @@ import kotlinx.coroutines.runBlocking
  * @date: 2024/10/23
  * @description: DataStore 工具类封装
  */
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "datastore")
 
 object DataStoreUtils {
 
