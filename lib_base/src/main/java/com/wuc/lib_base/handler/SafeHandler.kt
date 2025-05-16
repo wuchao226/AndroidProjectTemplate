@@ -11,6 +11,9 @@ import java.lang.ref.WeakReference
  * @date: 2025/5/16
  * @description: 安全的Handler实现，避免内存泄漏
  * 通过弱引用持有外部Activity/Fragment，防止Handler持有Activity引用导致的内存泄漏
+ *
+ * 参考：资深工程师踩坑实录：Handler引发的7大线程崩溃场景，你中招了吗？
+ * https://mp.weixin.qq.com/s/NOLPZLOA1kLWzSnSLK3eIw
  */
 class SafeHandler : Handler {
     private val activityRef: WeakReference<Activity>
